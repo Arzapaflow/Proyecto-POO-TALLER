@@ -8,17 +8,17 @@ namespace Proyecto1.Models
 {
     public class Problema
     {
-      
-        // ATRIBUTOS
-   
 
+    
+        // ATRIBUTOS
+ 
         private int _id;
         private string _nombre;
-        private string _posiblesCausas;
+        private string _informacionCliente;
 
-       
+      
         // PROPIEDADES
-    
+        
 
         public int Id
         {
@@ -38,37 +38,36 @@ namespace Proyecto1.Models
             }
         }
 
-        public string PosiblesCausas
+        public string InformacionCliente
         {
-            get { return _posiblesCausas; }
+            get { return _informacionCliente; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Debe existir al menos una posible causa.");
+                    throw new ArgumentException("Debe proporcionar información para el cliente.");
 
-                _posiblesCausas = value.Trim();
+                _informacionCliente = value.Trim();
             }
         }
 
-        
-        // CONSTRUCTORES
        
-
+        // CONSTRUCTORES
+      
         public Problema()
         {
 
         }
 
-        public Problema(string nombre, string posiblesCausas)
+        public Problema(string nombre, string informacionCliente)
         {
             Nombre = nombre;
-            PosiblesCausas = posiblesCausas;
+            InformacionCliente = informacionCliente;
         }
 
-       
-        // MÉTODOS
-        
 
+        // MÉTODOS
+
+        //pa que no imprima todo el objeto, sino solo el nombre del problema
         public override string ToString()
         {
             return Nombre;

@@ -9,29 +9,33 @@ namespace Proyecto1.Models
 {
     public class Ticket
     {
-        // ==========================
+      
         // ATRIBUTOS
-        // ==========================
+
 
         private int _id;
         private string _folio;
+
         private Equipo _equipo;
-        private Problema _falla;
+        private Problema _problema;
+
         private string _observacionesCliente;
-        private DateTime _fechaIngreso;
-        private DateTime? _fechaEntrega;
-        private EstadoTicket _estado;
         private string _diagnostico;
 
-        // Se agregará cuando exista la clase Tecnico
-        // private Tecnico _tecnico;
+        private DateTime _fechaIngreso;
+        private DateTime? _fechaEntrega;
+
+        private EstadoTicket _estado;
+
+      
+        // private Tecnico _tecnico; todavía we
 
         private double _tiempoInvertido;
         private decimal _costoMateriales;
 
-        // ==========================
+    
         // PROPIEDADES
-        // ==========================
+      
 
         public int Id
         {
@@ -63,15 +67,15 @@ namespace Proyecto1.Models
             }
         }
 
-        public Problema Falla
+        public Problema Problema
         {
-            get { return _falla; }
+            get { return _problema; }
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException(nameof(Falla));
+                    throw new ArgumentNullException(nameof(Problema));
 
-                _falla = value;
+                _problema = value;
             }
         }
 
@@ -81,9 +85,18 @@ namespace Proyecto1.Models
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Las observaciones no pueden estar vacías.");
+                    throw new ArgumentException("Debe registrar las observaciones del cliente.");
 
                 _observacionesCliente = value.Trim();
+            }
+        }
+
+        public string Diagnostico
+        {
+            get { return _diagnostico; }
+            set
+            {
+                _diagnostico = value?.Trim();
             }
         }
 
@@ -103,15 +116,6 @@ namespace Proyecto1.Models
         {
             get { return _estado; }
             set { _estado = value; }
-        }
-
-        public string Diagnostico
-        {
-            get { return _diagnostico; }
-            set
-            {
-                _diagnostico = value;
-            }
         }
 
         public double TiempoInvertido
@@ -138,9 +142,9 @@ namespace Proyecto1.Models
             }
         }
 
-        // ==========================
-        // CONSTRUCTORES
-        // ==========================
+      
+ 
+        
 
         public Ticket()
         {
@@ -153,12 +157,12 @@ namespace Proyecto1.Models
         public Ticket(
             string folio,
             Equipo equipo,
-            Problema falla,
+            Problema problema,
             string observacionesCliente)
         {
             Folio = folio;
             Equipo = equipo;
-            Falla = falla;
+            Problema = problema;
             ObservacionesCliente = observacionesCliente;
 
             FechaIngreso = DateTime.Now;
@@ -168,9 +172,9 @@ namespace Proyecto1.Models
             CostoMateriales = 0;
         }
 
-        // ==========================
-        // MÉTODOS
-        // ==========================
+      
+        // MÉTODO
+        
 
         public override string ToString()
         {
