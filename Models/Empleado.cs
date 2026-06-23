@@ -9,19 +9,20 @@ using Proyecto1.Models.Enums;
 
 namespace Proyecto1.Models
 {
-    public abstract class Empleado : Persona
+
+    public class Empleado : Persona
     {
-        
+        // ==========================
         // ATRIBUTOS
-      
+        // ==========================
 
         private string _usuario;
         private string _contraseña;
-        private readonly Rol _rol;
+        private Rol _rol;
         private EstadoEmpleado _estado;
         private DateTime _fechaIngreso;
 
-     
+      
         // PROPIEDADES
       
 
@@ -52,32 +53,42 @@ namespace Proyecto1.Models
         public Rol Rol
         {
             get { return _rol; }
+            protected set
+                // Solo sus hijas pueden acceder (Por eso técnico daba problemas)
+            {
+                _rol = value;
+            }
         }
 
         public EstadoEmpleado Estado
         {
             get { return _estado; }
-            set { _estado = value; }
+            set
+            {
+                _estado = value;
+            }
         }
 
         public DateTime FechaIngreso
         {
             get { return _fechaIngreso; }
-            private set { _fechaIngreso = value; }
+            private set
+            {
+                _fechaIngreso = value;
+            }
         }
 
-      
+     
         // CONSTRUCTORES
-       
+  
 
-        protected Empleado(Rol rol)
+        public Empleado()
         {
-            _rol = rol;
             Estado = EstadoEmpleado.Activo;
             FechaIngreso = DateTime.Now;
         }
 
-        protected Empleado(
+        public Empleado(
             string nombre,
             string telefono,
             string correo,
@@ -88,15 +99,15 @@ namespace Proyecto1.Models
         {
             Usuario = usuario;
             Contraseña = contraseña;
+            Rol = rol;
 
-            _rol = rol;
             Estado = EstadoEmpleado.Activo;
             FechaIngreso = DateTime.Now;
         }
 
-   
+       
         // MÉTODOS
-      
+       
 
         public override string ToString()
         {

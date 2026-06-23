@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Proyecto1.Models
 {
+
     public class Recepcionista : Empleado
     {
-        //==========================
+      
         // CONSTRUCTORES
-        //==========================
+  
 
-        public Recepcionista()
-            : base(Proyecto1.Models.Enums.Rol.Recepcionista)
+        public Recepcionista() : base()
         {
 
         }
@@ -25,14 +25,24 @@ namespace Proyecto1.Models
             string usuario,
             string contraseña)
             : base(
-                  nombre,
-                  telefono,
-                  correo,
-                  usuario,
-                  contraseña,
-                  Proyecto1.Models.Enums.Rol.Recepcionista)
+                nombre,
+                telefono,
+                correo,
+                usuario,
+                contraseña,
+                Proyecto1.Models.Enums.Rol.Recepcionista)
+            //Tiene que ser así o se confunde 
         {
 
+        }
+
+     
+        // MÉTODOS
+       
+
+        public override string ToString()
+        {
+            return $"{Nombre} - Recepcionista";
         }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="Models\Problema.cs" />
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\Recepcionista.cs" />
+    <Compile Include="Models\Tecnico.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\TipoEquipo.cs" />
     <Compile Include="Program.cs" />
