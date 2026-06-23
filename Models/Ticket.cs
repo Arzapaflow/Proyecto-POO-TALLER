@@ -18,6 +18,7 @@ namespace Proyecto1.Models
 
         private Equipo _equipo;
         private Problema _problema;
+        private Tecnico _tecnicoAsignado;
 
         private string _observacionesCliente;
         private string _diagnostico;
@@ -78,6 +79,13 @@ namespace Proyecto1.Models
                 _problema = value;
             }
         }
+        // Se asigna posteriormente por el recepcionista
+        public Tecnico TecnicoAsignado
+        {
+            get { return _tecnicoAsignado; }
+            set { _tecnicoAsignado = value; }
+        }
+
 
         public string ObservacionesCliente
         {

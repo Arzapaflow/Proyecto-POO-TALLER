@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Proyecto1.Models.Enums;
 
 namespace Proyecto1.Models
 {
-
-    public class Recepcionista : Empleado
+    public class Administrador : Empleado
     {
-      
-        // CONSTRUCTORES
-  
+       
+        // CONSTRUCTOR
+        
 
-        public Recepcionista() : base()
+        public Administrador() : base()
         {
 
         }
 
-        public Recepcionista(
+        public Administrador(
             string nombre,
             string telefono,
             string correo,
@@ -31,19 +31,17 @@ namespace Proyecto1.Models
                 correo,
                 usuario,
                 contraseña,
-                Proyecto1.Models.Enums.Rol.Recepcionista)
-            //Tiene que ser así o se confunde 
+                Proyecto1.Models.Enums.Rol.Administrador)
         {
 
         }
 
-     
-        // MÉTODOS
+      // MÉTODOS
        
 
         public override string ToString()
         {
-            return $"{Nombre} - Recepcionista";
+            return $"{Nombre} - Administrador";
         }
     }
 }

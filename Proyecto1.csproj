@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Administrador.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Empleado.cs" />
     <Compile Include="Models\Enums\Especialidad.cs" />
@@ -50,6 +51,8 @@
     <Compile Include="Models\Enums\EstadoTicket.cs" />
     <Compile Include="Models\Enums\Rol.cs" />
     <Compile Include="Models\Equipo.cs" />
+    <Compile Include="Models\Material.cs" />
+    <Compile Include="Models\MovimientoInventario.cs" />
     <Compile Include="Models\Problema.cs" />
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\Recepcionista.cs" />
