@@ -105,9 +105,6 @@ GO
 
 /*==========================================================
     TABLA: Administradores
-
-    Representa la herencia:
-    Administrador : Empleado
 ==========================================================*/
 
 CREATE TABLE Administradores
@@ -126,15 +123,6 @@ GO
 
 /*==========================================================
     TABLA: Usuarios
-
-    Guarda los datos utilizados para iniciar sesión.
-
-    Cada usuario pertenece a:
-    - Un empleado.
-    - Un rol.
-
-    El campo IdEmpleado es UNIQUE para garantizar que un
-    empleado solamente tenga una cuenta de acceso.
 ==========================================================*/
 
 CREATE TABLE Usuarios
