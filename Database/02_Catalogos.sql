@@ -7,7 +7,7 @@ USE TallerReparaciones;
 GO
 
 /*==========================================================
-    TABLA: Roles
+    TABLA: Roles de empleados
 ==========================================================*/
 
 CREATE TABLE Roles
