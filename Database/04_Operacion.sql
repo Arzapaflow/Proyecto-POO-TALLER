@@ -9,9 +9,6 @@ GO
 
 /*==========================================================
     TABLA: Problemas
-
-    Catálogo de problemas comunes reportados por los
-    clientes o identificados durante la recepción.
 ==========================================================*/
 
 CREATE TABLE dbo.Problemas
@@ -46,10 +43,6 @@ GO
 
 /*==========================================================
     TABLA: Equipos
-
-    Cada equipo pertenece a:
-    - Un cliente.
-    - Un tipo de equipo.
 ==========================================================*/
 
 CREATE TABLE dbo.Equipos
@@ -88,9 +81,6 @@ GO
 
 /*==========================================================
     TABLA: Materiales
-
-    Representa las piezas, componentes y consumibles
-    disponibles en el inventario del taller.
 ==========================================================*/
 
 CREATE TABLE dbo.Materiales
@@ -139,13 +129,6 @@ GO
 
 /*==========================================================
     TABLA: Tickets
-
-    Cada ticket se relaciona con:
-    - Un equipo.
-    - Un problema.
-    - Un estado.
-    - Un recepcionista.
-    - Opcionalmente, un técnico.
 ==========================================================*/
 
 CREATE TABLE dbo.Tickets
@@ -255,11 +238,6 @@ GO
 
 /*==========================================================
     TABLA: MovimientosInventario
-
-    En una salida por reparación se puede identificar:
-    - El material utilizado.
-    - El ticket correspondiente.
-    - El técnico que utilizó el material.
 ==========================================================*/
 
 CREATE TABLE dbo.MovimientosInventario

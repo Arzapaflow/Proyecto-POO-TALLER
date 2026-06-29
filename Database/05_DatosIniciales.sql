@@ -1,9 +1,6 @@
 /*==========================================================
     PROYECTO: Sistema de Gestión para Taller de Reparaciones
     ARCHIVO: 05_DatosIniciales.sql
-    DESCRIPCIÓN:
-    Inserta los datos iniciales necesarios para utilizar
-    el sistema.
 ==========================================================*/
 
 USE TallerReparaciones;

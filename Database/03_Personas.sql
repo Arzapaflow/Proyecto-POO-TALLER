@@ -1,9 +1,6 @@
 /*==========================================================
     PROYECTO: Sistema de Gestión para Taller de Reparaciones
     ARCHIVO: 03_Personas.sql
-    DESCRIPCIÓN:
-    Crea las tablas relacionadas con clientes, empleados,
-    técnicos, recepcionistas, administradores y usuarios.
 ==========================================================*/
 
 USE TallerReparaciones;
@@ -12,9 +9,6 @@ GO
 
 /*==========================================================
     TABLA: Clientes
-
-    Representa a las personas que llevan equipos al taller.
-    Corresponde a la clase Cliente de C#.
 ==========================================================*/
 
 CREATE TABLE Clientes
@@ -33,11 +27,6 @@ GO
 
 /*==========================================================
     TABLA: Empleados
-
-    Guarda la información común de todos los trabajadores.
-
-    Los técnicos, recepcionistas y administradores se
-    relacionarán con esta tabla mediante IdEmpleado.
 ==========================================================*/
 
 CREATE TABLE Empleados
@@ -67,15 +56,6 @@ GO
 
 /*==========================================================
     TABLA: Tecnicos
-
-    Representa la especialización de un empleado técnico.
-
-    El IdEmpleado funciona simultáneamente como:
-    - Llave primaria de Tecnicos.
-    - Llave foránea hacia Empleados.
-
-    Esto representa en SQL la herencia:
-    Tecnico : Empleado
 ==========================================================*/
 
 CREATE TABLE Tecnicos
@@ -107,9 +87,6 @@ GO
 
 /*==========================================================
     TABLA: Recepcionistas
-
-    Representa la herencia:
-    Recepcionista : Empleado
 ==========================================================*/
 
 CREATE TABLE Recepcionistas
