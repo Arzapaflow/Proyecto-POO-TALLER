@@ -334,9 +334,6 @@ GO
 
 /*==========================================================
     ÍNDICES
-
-    Facilitan las búsquedas por cliente, técnico, estado,
-    ticket y material.
 ==========================================================*/
 
 CREATE INDEX IX_Equipos_IdCliente

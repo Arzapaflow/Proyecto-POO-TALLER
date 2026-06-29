@@ -110,9 +110,6 @@ GO
 
     Representa la herencia:
     Recepcionista : Empleado
-
-    Actualmente no tiene atributos específicos, por eso
-    solamente contiene el IdEmpleado.
 ==========================================================*/
 
 CREATE TABLE Recepcionistas
@@ -134,9 +131,6 @@ GO
 
     Representa la herencia:
     Administrador : Empleado
-
-    Actualmente no tiene atributos específicos, por eso
-    solamente contiene el IdEmpleado.
 ==========================================================*/
 
 CREATE TABLE Administradores
