@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace Proyecto1.Database
@@ -15,6 +16,12 @@ namespace Proyecto1.Database
             return new SqlConnection(cadenaConexion);
         }
 
+        // Se conserva para no romper código creado por tus compañeros
+        public static SqlConnection ObtenerConexion()
+        {
+            return CrearConexion();
+        }
+
         public static bool ProbarConexion(out string mensajeError)
         {
             try
@@ -26,7 +33,7 @@ namespace Proyecto1.Database
                     return true;
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 mensajeError = ex.Message;
                 return false;

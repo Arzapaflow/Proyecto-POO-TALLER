@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Windows.Forms;
-using Proyecto1.Forms;
 
 namespace Proyecto1
 {
     internal static class Program
     {
+        /// <summary>
+        /// Punto de entrada principal de la aplicación.
+        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            Application.Run(new FrmInicio());
+            Application.Run(new FrmLogin());
         }
     }
 }
