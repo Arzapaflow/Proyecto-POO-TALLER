@@ -27,21 +27,7 @@ namespace Proyecto1
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-            MaterialRepository repositorio = new MaterialRepository();
-
-            Material material = repositorio.ObtenerPorId(1);
-
-            if (material != null)
-            {
-                MessageBox.Show(
-                    $"Código: {material.Codigo}\n" +
-                    $"Nombre: {material.Nombre}\n" +
-                    $"Stock: {material.Stock}");
-            }
-            else
-            {
-                MessageBox.Show("No se encontró el material.");
-            }
+            
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e)

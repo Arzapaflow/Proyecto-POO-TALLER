@@ -41,12 +41,50 @@ namespace Proyecto1.Repositorios
 
         public bool Actualizar(Material material)
         {
-            throw new System.NotImplementedException();
+            using (SqlConnection conexion = ConexionBD.CrearConexion())
+            {
+                string consulta = @"UPDATE Materiales
+                            SET Codigo = @Codigo,
+                                Nombre = @Nombre,
+                                Descripcion = @Descripcion,
+                                Stock = @Stock,
+                                StockMinimo = @StockMinimo,
+                                CostoUnitario = @CostoUnitario,
+                                Activo = @Activo
+                            WHERE IdMaterial = @IdMaterial";
+
+                SqlCommand comando = new SqlCommand(consulta, conexion);
+
+                comando.Parameters.AddWithValue("@IdMaterial", material.IdMaterial);
+                comando.Parameters.AddWithValue("@Codigo", material.Codigo);
+                comando.Parameters.AddWithValue("@Nombre", material.Nombre);
+                comando.Parameters.AddWithValue("@Descripcion", material.Descripcion);
+                comando.Parameters.AddWithValue("@Stock", material.Stock);
+                comando.Parameters.AddWithValue("@StockMinimo", material.StockMinimo);
+                comando.Parameters.AddWithValue("@CostoUnitario", material.CostoUnitario);
+                comando.Parameters.AddWithValue("@Activo", material.Activo);
+
+                conexion.Open();
+
+                return comando.ExecuteNonQuery() > 0;
+            }
         }
 
         public bool Eliminar(int idMaterial)
         {
-            throw new System.NotImplementedException();
+            using (SqlConnection conexion = ConexionBD.CrearConexion())
+            {
+                string consulta = @"DELETE FROM Materiales
+                            WHERE IdMaterial = @IdMaterial";
+
+                SqlCommand comando = new SqlCommand(consulta, conexion);
+
+                comando.Parameters.AddWithValue("@IdMaterial", idMaterial);
+
+                conexion.Open();
+
+                return comando.ExecuteNonQuery() > 0;
+            }
         }
 
         public Material ObtenerPorId(int idMaterial)
