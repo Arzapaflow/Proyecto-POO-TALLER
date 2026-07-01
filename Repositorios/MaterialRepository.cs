@@ -56,7 +56,44 @@ namespace Proyecto1.Repositorios
 
         public List<Material> ObtenerTodos()
         {
-            throw new System.NotImplementedException();
+            List<Material> listaMateriales = new List<Material>();
+
+            using (SqlConnection conexion = ConexionBD.CrearConexion())
+            {
+                string consulta = @"SELECT IdMaterial,
+                                   Codigo,
+                                   Nombre,
+                                   Descripcion,
+                                   Stock,
+                                   StockMinimo,
+                                   CostoUnitario,
+                                   Activo
+                            FROM Materiales";
+
+                SqlCommand comando = new SqlCommand(consulta, conexion);
+
+                conexion.Open();
+
+                SqlDataReader reader = comando.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Material material = new Material();
+
+                    material.IdMaterial = Convert.ToInt32(reader["IdMaterial"]);
+                    material.Codigo = reader["Codigo"].ToString();
+                    material.Nombre = reader["Nombre"].ToString();
+                    material.Descripcion = reader["Descripcion"].ToString();
+                    material.Stock = Convert.ToDecimal(reader["Stock"]);
+                    material.StockMinimo = Convert.ToDecimal(reader["StockMinimo"]);
+                    material.CostoUnitario = Convert.ToDecimal(reader["CostoUnitario"]);
+                    material.Activo = Convert.ToBoolean(reader["Activo"]);
+
+                    listaMateriales.Add(material);
+                }
+            }
+
+            return listaMateriales;
         }
     }
 }
