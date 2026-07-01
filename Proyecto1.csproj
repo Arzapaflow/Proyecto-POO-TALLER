@@ -84,6 +84,8 @@
     <Compile Include="Models\TipoEquipo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Interfaces\IMaterialRepository.cs" />
+    <Compile Include="Repositorios\MaterialRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -92,7 +94,6 @@
   <ItemGroup>
     <Folder Include="Forms\" />
     <Folder Include="Recursos\" />
-    <Folder Include="Repositorios\" />
     <Folder Include="Services\" />
     <Folder Include="Utilidades\" />
   </ItemGroup>

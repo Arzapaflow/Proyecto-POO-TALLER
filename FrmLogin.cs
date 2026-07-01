@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Proyecto1.Database;
-using System.Data.SqlClient;
 
 namespace Proyecto1
 {
@@ -26,18 +24,7 @@ namespace Proyecto1
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-            try
-            {
-                using (SqlConnection conexion = ConexionBD.ObtenerConexion())
-                {
-                    conexion.Open();
-                    MessageBox.Show(" Conexión exitosa con la base de datos.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(" Error al conectar:\n\n" + ex.Message);
-            }
+           
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e)

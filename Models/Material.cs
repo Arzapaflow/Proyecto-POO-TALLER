@@ -4,30 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Proyecto1.Models
 {
-
     public class Material
     {
-       //siempre háganlo en ese orden, está más fácil de hacer debug así, primero los atributos, luego las propiedades, luego los constructores y finalmente los métodos
+        //siempre háganlo en ese orden, está más fácil de hacer debug así, primero los atributos, luego las propiedades, luego los constructores y finalmente los métodos
         // ATRIBUTOS
-       
 
-        private int _id;
+        private int _idMaterial;
+        private string _codigo;
         private string _nombre;
         private string _descripcion;
-        private int _cantidadDisponible;
-        private int _stockMinimo;
+        private decimal _stock;
+        private decimal _stockMinimo;
         private decimal _costoUnitario;
+        private bool _activo;
 
-       
         // PROPIEDADES
-     
 
-        public int Id
+        public int IdMaterial
         {
-            get { return _id; }
-            set { _id = value; }
+            get { return _idMaterial; }
+            set { _idMaterial = value; }
+        }
+
+        public string Codigo
+        {
+            get { return _codigo; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("El código no puede estar vacío.");
+
+                _codigo = value.Trim();
+            }
         }
 
         public string Nombre
@@ -36,7 +47,7 @@ namespace Proyecto1.Models
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El nombre del material no puede estar vacío.");
+                    throw new ArgumentException("El nombre no puede estar vacío.");
 
                 _nombre = value.Trim();
             }
@@ -45,25 +56,22 @@ namespace Proyecto1.Models
         public string Descripcion
         {
             get { return _descripcion; }
-            set
-            {
-                _descripcion = value?.Trim();
-            }
+            set { _descripcion = value?.Trim(); }
         }
 
-        public int CantidadDisponible
+        public decimal Stock
         {
-            get { return _cantidadDisponible; }
+            get { return _stock; }
             set
             {
                 if (value < 0)
-                    throw new ArgumentException("La cantidad disponible no puede ser negativa.");
+                    throw new ArgumentException("El stock no puede ser negativo.");
 
-                _cantidadDisponible = value;
+                _stock = value;
             }
         }
 
-        public int StockMinimo
+        public decimal StockMinimo
         {
             get { return _stockMinimo; }
             set
@@ -87,36 +95,36 @@ namespace Proyecto1.Models
             }
         }
 
+        public bool Activo
+        {
+            get { return _activo; }
+            set { _activo = value; }
+        }
 
         // CONSTRUCTORES
-     
 
         public Material()
         {
-
         }
 
-        public Material(
-            string nombre,
-            string descripcion,
-            int cantidadDisponible,
-            int stockMinimo,
-            decimal costoUnitario)
+        public Material(string codigo, string nombre, string descripcion,
+                        decimal stock, decimal stockMinimo,
+                        decimal costoUnitario, bool activo = true)
         {
+            Codigo = codigo;
             Nombre = nombre;
             Descripcion = descripcion;
-            CantidadDisponible = cantidadDisponible;
+            Stock = stock;
             StockMinimo = stockMinimo;
             CostoUnitario = costoUnitario;
+            Activo = activo;
         }
 
-       
         // MÉTODOS
-       
 
         public override string ToString()
         {
-            return $"{Nombre} ({CantidadDisponible} disponibles)";
+            return $"{Codigo} - {Nombre}";
         }
     }
 }
