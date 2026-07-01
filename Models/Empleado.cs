@@ -12,9 +12,9 @@ namespace Proyecto1.Models
 
     public class Empleado : Persona
     {
-        // ==========================
+       
         // ATRIBUTOS
-        // ==========================
+        
 
         private string _usuario;
         private string _contraseña;
