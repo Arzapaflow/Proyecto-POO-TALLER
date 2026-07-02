@@ -24,7 +24,7 @@ namespace Proyecto1.Models
         public int Id
         {
             get { return _id; }
-            protected set { _id = value; }
+            set { _id = value; }
         }
 
         public string Nombre

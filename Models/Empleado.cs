@@ -72,7 +72,7 @@ namespace Proyecto1.Models
         public DateTime FechaIngreso
         {
             get { return _fechaIngreso; }
-            private set
+            set
             {
                 _fechaIngreso = value;
             }
