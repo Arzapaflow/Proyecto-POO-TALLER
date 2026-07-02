@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SQLite;
 using Proyecto1.Database;
 using Proyecto1.Models;
 using Proyecto1.Repositorios.Interfaces;
-using System.Data;
-using System.Data.SqlClient;
-
 
 namespace Proyecto1.Repositorios
 {
@@ -16,160 +11,196 @@ namespace Proyecto1.Repositorios
     {
         public bool Insertar(Material material)
         {
-            using (SqlConnection conexion = ConexionBD.CrearConexion())
+            using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"INSERT INTO Materiales
-                            (Codigo, Nombre, Descripcion, Stock, StockMinimo, CostoUnitario, Activo)
-                            VALUES
-                            (@Codigo, @Nombre, @Descripcion, @Stock, @StockMinimo, @CostoUnitario, @Activo)";
+                string consulta = @"
+                    INSERT INTO Materiales
+                    (
+                        Codigo,
+                        Nombre,
+                        Descripcion,
+                        Stock,
+                        StockMinimo,
+                        CostoUnitario,
+                        Activo
+                    )
+                    VALUES
+                    (
+                        @Codigo,
+                        @Nombre,
+                        @Descripcion,
+                        @Stock,
+                        @StockMinimo,
+                        @CostoUnitario,
+                        @Activo
+                    );";
 
-                SqlCommand comando = new SqlCommand(consulta, conexion);
+                using (SQLiteCommand comando = new SQLiteCommand(consulta, conexion))
+                {
+                    comando.Parameters.AddWithValue("@Codigo", material.Codigo);
+                    comando.Parameters.AddWithValue("@Nombre", material.Nombre);
+                    comando.Parameters.AddWithValue(
+                        "@Descripcion",
+                        string.IsNullOrWhiteSpace(material.Descripcion)
+                            ? (object)DBNull.Value
+                            : material.Descripcion
+                    );
+                    comando.Parameters.AddWithValue("@Stock", material.Stock);
+                    comando.Parameters.AddWithValue("@StockMinimo", material.StockMinimo);
+                    comando.Parameters.AddWithValue("@CostoUnitario", material.CostoUnitario);
+                    comando.Parameters.AddWithValue("@Activo", material.Activo ? 1 : 0);
 
-                comando.Parameters.AddWithValue("@Codigo", material.Codigo);
-                comando.Parameters.AddWithValue("@Nombre", material.Nombre);
-                comando.Parameters.AddWithValue("@Descripcion", material.Descripcion);
-                comando.Parameters.AddWithValue("@Stock", material.Stock);
-                comando.Parameters.AddWithValue("@StockMinimo", material.StockMinimo);
-                comando.Parameters.AddWithValue("@CostoUnitario", material.CostoUnitario);
-                comando.Parameters.AddWithValue("@Activo", material.Activo);
+                    conexion.Open();
 
-                conexion.Open();
-
-                return comando.ExecuteNonQuery() > 0;
+                    return comando.ExecuteNonQuery() > 0;
+                }
             }
         }
 
         public bool Actualizar(Material material)
         {
-            using (SqlConnection conexion = ConexionBD.CrearConexion())
+            using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"UPDATE Materiales
-                            SET Codigo = @Codigo,
-                                Nombre = @Nombre,
-                                Descripcion = @Descripcion,
-                                Stock = @Stock,
-                                StockMinimo = @StockMinimo,
-                                CostoUnitario = @CostoUnitario,
-                                Activo = @Activo
-                            WHERE IdMaterial = @IdMaterial";
+                string consulta = @"
+                    UPDATE Materiales
+                    SET Codigo = @Codigo,
+                        Nombre = @Nombre,
+                        Descripcion = @Descripcion,
+                        Stock = @Stock,
+                        StockMinimo = @StockMinimo,
+                        CostoUnitario = @CostoUnitario,
+                        Activo = @Activo
+                    WHERE IdMaterial = @IdMaterial;";
 
-                SqlCommand comando = new SqlCommand(consulta, conexion);
+                using (SQLiteCommand comando = new SQLiteCommand(consulta, conexion))
+                {
+                    comando.Parameters.AddWithValue("@IdMaterial", material.IdMaterial);
+                    comando.Parameters.AddWithValue("@Codigo", material.Codigo);
+                    comando.Parameters.AddWithValue("@Nombre", material.Nombre);
+                    comando.Parameters.AddWithValue(
+                        "@Descripcion",
+                        string.IsNullOrWhiteSpace(material.Descripcion)
+                            ? (object)DBNull.Value
+                            : material.Descripcion
+                    );
+                    comando.Parameters.AddWithValue("@Stock", material.Stock);
+                    comando.Parameters.AddWithValue("@StockMinimo", material.StockMinimo);
+                    comando.Parameters.AddWithValue("@CostoUnitario", material.CostoUnitario);
+                    comando.Parameters.AddWithValue("@Activo", material.Activo ? 1 : 0);
 
-                comando.Parameters.AddWithValue("@IdMaterial", material.IdMaterial);
-                comando.Parameters.AddWithValue("@Codigo", material.Codigo);
-                comando.Parameters.AddWithValue("@Nombre", material.Nombre);
-                comando.Parameters.AddWithValue("@Descripcion", material.Descripcion);
-                comando.Parameters.AddWithValue("@Stock", material.Stock);
-                comando.Parameters.AddWithValue("@StockMinimo", material.StockMinimo);
-                comando.Parameters.AddWithValue("@CostoUnitario", material.CostoUnitario);
-                comando.Parameters.AddWithValue("@Activo", material.Activo);
+                    conexion.Open();
 
-                conexion.Open();
-
-                return comando.ExecuteNonQuery() > 0;
+                    return comando.ExecuteNonQuery() > 0;
+                }
             }
         }
 
         public bool Eliminar(int idMaterial)
         {
-            using (SqlConnection conexion = ConexionBD.CrearConexion())
+            using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"DELETE FROM Materiales
-                            WHERE IdMaterial = @IdMaterial";
+                string consulta = @"
+                    DELETE FROM Materiales
+                    WHERE IdMaterial = @IdMaterial;";
 
-                SqlCommand comando = new SqlCommand(consulta, conexion);
+                using (SQLiteCommand comando = new SQLiteCommand(consulta, conexion))
+                {
+                    comando.Parameters.AddWithValue("@IdMaterial", idMaterial);
 
-                comando.Parameters.AddWithValue("@IdMaterial", idMaterial);
+                    conexion.Open();
 
-                conexion.Open();
-
-                return comando.ExecuteNonQuery() > 0;
+                    return comando.ExecuteNonQuery() > 0;
+                }
             }
         }
 
         public Material ObtenerPorId(int idMaterial)
         {
-            Material material = null;
-
-            using (SqlConnection conexion = ConexionBD.CrearConexion())
+            using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"SELECT IdMaterial,
-                                   Codigo,
-                                   Nombre,
-                                   Descripcion,
-                                   Stock,
-                                   StockMinimo,
-                                   CostoUnitario,
-                                   Activo
-                            FROM Materiales
-                            WHERE IdMaterial = @IdMaterial";
+                string consulta = @"
+                    SELECT
+                        IdMaterial,
+                        Codigo,
+                        Nombre,
+                        Descripcion,
+                        Stock,
+                        StockMinimo,
+                        CostoUnitario,
+                        Activo
+                    FROM Materiales
+                    WHERE IdMaterial = @IdMaterial;";
 
-                SqlCommand comando = new SqlCommand(consulta, conexion);
-
-                comando.Parameters.AddWithValue("@IdMaterial", idMaterial);
-
-                conexion.Open();
-
-                SqlDataReader reader = comando.ExecuteReader();
-
-                if (reader.Read())
+                using (SQLiteCommand comando = new SQLiteCommand(consulta, conexion))
                 {
-                    material = new Material();
+                    comando.Parameters.AddWithValue("@IdMaterial", idMaterial);
 
-                    material.IdMaterial = Convert.ToInt32(reader["IdMaterial"]);
-                    material.Codigo = reader["Codigo"].ToString();
-                    material.Nombre = reader["Nombre"].ToString();
-                    material.Descripcion = reader["Descripcion"].ToString();
-                    material.Stock = Convert.ToDecimal(reader["Stock"]);
-                    material.StockMinimo = Convert.ToDecimal(reader["StockMinimo"]);
-                    material.CostoUnitario = Convert.ToDecimal(reader["CostoUnitario"]);
-                    material.Activo = Convert.ToBoolean(reader["Activo"]);
+                    conexion.Open();
+
+                    using (SQLiteDataReader reader = comando.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            return null;
+                        }
+
+                        return MapearMaterial(reader);
+                    }
                 }
             }
-
-            return material;
         }
 
         public List<Material> ObtenerTodos()
         {
             List<Material> listaMateriales = new List<Material>();
 
-            using (SqlConnection conexion = ConexionBD.CrearConexion())
+            using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"SELECT IdMaterial,
-                                   Codigo,
-                                   Nombre,
-                                   Descripcion,
-                                   Stock,
-                                   StockMinimo,
-                                   CostoUnitario,
-                                   Activo
-                            FROM Materiales";
+                string consulta = @"
+                    SELECT
+                        IdMaterial,
+                        Codigo,
+                        Nombre,
+                        Descripcion,
+                        Stock,
+                        StockMinimo,
+                        CostoUnitario,
+                        Activo
+                    FROM Materiales
+                    ORDER BY Nombre;";
 
-                SqlCommand comando = new SqlCommand(consulta, conexion);
-
-                conexion.Open();
-
-                SqlDataReader reader = comando.ExecuteReader();
-
-                while (reader.Read())
+                using (SQLiteCommand comando = new SQLiteCommand(consulta, conexion))
                 {
-                    Material material = new Material();
+                    conexion.Open();
 
-                    material.IdMaterial = Convert.ToInt32(reader["IdMaterial"]);
-                    material.Codigo = reader["Codigo"].ToString();
-                    material.Nombre = reader["Nombre"].ToString();
-                    material.Descripcion = reader["Descripcion"].ToString();
-                    material.Stock = Convert.ToDecimal(reader["Stock"]);
-                    material.StockMinimo = Convert.ToDecimal(reader["StockMinimo"]);
-                    material.CostoUnitario = Convert.ToDecimal(reader["CostoUnitario"]);
-                    material.Activo = Convert.ToBoolean(reader["Activo"]);
-
-                    listaMateriales.Add(material);
+                    using (SQLiteDataReader reader = comando.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            listaMateriales.Add(MapearMaterial(reader));
+                        }
+                    }
                 }
             }
 
             return listaMateriales;
+        }
+
+        private Material MapearMaterial(SQLiteDataReader reader)
+        {
+            return new Material
+            {
+                IdMaterial = Convert.ToInt32(reader["IdMaterial"]),
+                Codigo = reader["Codigo"].ToString(),
+                Nombre = reader["Nombre"].ToString(),
+                Descripcion = reader["Descripcion"] == DBNull.Value
+                    ? string.Empty
+                    : reader["Descripcion"].ToString(),
+                Stock = Convert.ToDecimal(reader["Stock"]),
+                StockMinimo = Convert.ToDecimal(reader["StockMinimo"]),
+                CostoUnitario = Convert.ToDecimal(reader["CostoUnitario"]),
+                Activo = Convert.ToInt32(reader["Activo"]) == 1
+            };
         }
     }
 }
