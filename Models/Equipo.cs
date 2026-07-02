@@ -8,9 +8,9 @@ namespace Proyecto1.Models
 {
     public class Equipo
     {
-       
+        // ==========================
         // ATRIBUTOS
-    
+        // ==========================
 
         private int _id;
         private Cliente _cliente;
@@ -18,9 +18,13 @@ namespace Proyecto1.Models
         private string _marca;
         private string _modelo;
         private string _color;
+        private string _numeroSerie;
+        private string _accesorios;
+        private string _observaciones;
 
+        // ==========================
         // PROPIEDADES
-        
+        // ==========================
 
         public int Id
         {
@@ -88,9 +92,36 @@ namespace Proyecto1.Models
             }
         }
 
-       
+        public string NumeroSerie
+        {
+            get { return _numeroSerie; }
+            set
+            {
+                _numeroSerie = value;
+            }
+        }
+
+        public string Accesorios
+        {
+            get { return _accesorios; }
+            set
+            {
+                _accesorios = value;
+            }
+        }
+
+        public string Observaciones
+        {
+            get { return _observaciones; }
+            set
+            {
+                _observaciones = value;
+            }
+        }
+
+        // ==========================
         // CONSTRUCTORES
-    
+        // ==========================
 
         public Equipo()
         {
@@ -102,18 +133,24 @@ namespace Proyecto1.Models
             TipoEquipo tipoEquipo,
             string marca,
             string modelo,
-            string color)
+            string color,
+            string numeroSerie = "",
+            string accesorios = "",
+            string observaciones = "")
         {
             Cliente = cliente;
             TipoEquipo = tipoEquipo;
             Marca = marca;
             Modelo = modelo;
             Color = color;
+            NumeroSerie = numeroSerie;
+            Accesorios = accesorios;
+            Observaciones = observaciones;
         }
 
-      
+        // ==========================
         // MÉTODOS
-     
+        // ==========================
 
         public override string ToString()
         {

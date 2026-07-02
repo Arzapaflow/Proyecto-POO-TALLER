@@ -5,38 +5,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Proyecto1.Models
 {
     public class Ticket
     {
-      
+        // ==========================
         // ATRIBUTOS
-
+        // ==========================
 
         private int _id;
         private string _folio;
 
         private Equipo _equipo;
         private Problema _problema;
+        private Recepcionista _recepcionista;
         private Tecnico _tecnicoAsignado;
 
-        private string _observacionesCliente;
+        private string _descripcionFalla;
         private string _diagnostico;
+        private string _solucionAplicada;
+        private string _prioridad;
+        private string _observaciones;
 
         private DateTime _fechaIngreso;
+        private DateTime? _fechaAsignacionTecnico;
         private DateTime? _fechaEntrega;
 
         private EstadoTicket _estado;
 
-      
-        // private Tecnico _tecnico; todavía we
+        private decimal _costoEstimado;
+        private decimal _costoFinal;
+        private int _garantiaDias;
 
-        private double _tiempoInvertido;
-        private decimal _costoMateriales;
-
-    
+        // ==========================
         // PROPIEDADES
-      
+        // ==========================
 
         public int Id
         {
@@ -79,39 +83,77 @@ namespace Proyecto1.Models
                 _problema = value;
             }
         }
-        // Se asigna posteriormente por el recepcionista
+
+        public Recepcionista Recepcionista
+        {
+            get { return _recepcionista; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(Recepcionista));
+
+                _recepcionista = value;
+            }
+        }
+
         public Tecnico TecnicoAsignado
         {
             get { return _tecnicoAsignado; }
             set { _tecnicoAsignado = value; }
         }
 
-
-        public string ObservacionesCliente
+        public string DescripcionFalla
         {
-            get { return _observacionesCliente; }
+            get { return _descripcionFalla; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Debe registrar las observaciones del cliente.");
+                    throw new ArgumentException("La descripción de la falla no puede estar vacía.");
 
-                _observacionesCliente = value.Trim();
+                _descripcionFalla = value.Trim();
             }
         }
 
         public string Diagnostico
         {
             get { return _diagnostico; }
+            set { _diagnostico = value?.Trim(); }
+        }
+
+        public string SolucionAplicada
+        {
+            get { return _solucionAplicada; }
+            set { _solucionAplicada = value?.Trim(); }
+        }
+
+        public string Prioridad
+        {
+            get { return _prioridad; }
             set
             {
-                _diagnostico = value?.Trim();
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Debe indicar la prioridad.");
+
+                _prioridad = value.Trim();
             }
+        }
+
+        public string Observaciones
+        {
+            get { return _observaciones; }
+            set { _observaciones = value?.Trim(); }
         }
 
         public DateTime FechaIngreso
         {
             get { return _fechaIngreso; }
-            private set { _fechaIngreso = value; }
+            set { _fechaIngreso = value; }
+        }
+
+        public DateTime? FechaAsignacionTecnico
+        {
+            get { return _fechaAsignacionTecnico; }
+            set { _fechaAsignacionTecnico = value; }
         }
 
         public DateTime? FechaEntrega
@@ -126,63 +168,82 @@ namespace Proyecto1.Models
             set { _estado = value; }
         }
 
-        public double TiempoInvertido
+        public decimal CostoEstimado
         {
-            get { return _tiempoInvertido; }
+            get { return _costoEstimado; }
             set
             {
                 if (value < 0)
-                    throw new ArgumentException("El tiempo invertido no puede ser negativo.");
+                    throw new ArgumentException("El costo estimado no puede ser negativo.");
 
-                _tiempoInvertido = value;
+                _costoEstimado = value;
             }
         }
 
-        public decimal CostoMateriales
+        public decimal CostoFinal
         {
-            get { return _costoMateriales; }
+            get { return _costoFinal; }
             set
             {
                 if (value < 0)
-                    throw new ArgumentException("El costo de materiales no puede ser negativo.");
+                    throw new ArgumentException("El costo final no puede ser negativo.");
 
-                _costoMateriales = value;
+                _costoFinal = value;
             }
         }
 
-      
- 
-        
+        public int GarantiaDias
+        {
+            get { return _garantiaDias; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("La garantía no puede ser negativa.");
+
+                _garantiaDias = value;
+            }
+        }
+
+        // ==========================
+        // CONSTRUCTORES
+        // ==========================
 
         public Ticket()
         {
             FechaIngreso = DateTime.Now;
             Estado = EstadoTicket.EnEspera;
-            TiempoInvertido = 0;
-            CostoMateriales = 0;
+            Prioridad = "Normal";
+            CostoEstimado = 0;
+            CostoFinal = 0;
+            GarantiaDias = 0;
         }
 
         public Ticket(
             string folio,
             Equipo equipo,
             Problema problema,
-            string observacionesCliente)
+            Recepcionista recepcionista,
+            string descripcionFalla)
         {
             Folio = folio;
             Equipo = equipo;
             Problema = problema;
-            ObservacionesCliente = observacionesCliente;
+            Recepcionista = recepcionista;
+            DescripcionFalla = descripcionFalla;
 
             FechaIngreso = DateTime.Now;
-            Estado = EstadoTicket.EnEspera;
 
-            TiempoInvertido = 0;
-            CostoMateriales = 0;
+            Estado = EstadoTicket.EnEspera;
+            Prioridad = "Normal";
+
+            CostoEstimado = 0;
+            CostoFinal = 0;
+            GarantiaDias = 0;
         }
 
-      
-        // MÉTODO
-        
+        // ==========================
+        // MÉTODOS
+        // ==========================
 
         public override string ToString()
         {

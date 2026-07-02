@@ -4,21 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Proyecto1.Models
 {
     public class Problema
     {
-
-    
+        
         // ATRIBUTOS
- 
+        
+
         private int _id;
         private string _nombre;
-        private string _informacionCliente;
+        private string _descripcion;
+        private string _posiblesCausas;
+        private decimal _costoEstimado;
+        private bool _activo;
 
-      
-        // PROPIEDADES
         
+        // PROPIEDADES
+       
 
         public int Id
         {
@@ -38,36 +42,70 @@ namespace Proyecto1.Models
             }
         }
 
-        public string InformacionCliente
+        public string Descripcion
         {
-            get { return _informacionCliente; }
+            get { return _descripcion; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Debe proporcionar información para el cliente.");
-
-                _informacionCliente = value.Trim();
+                _descripcion = value?.Trim();
             }
         }
 
-       
+        public string PosiblesCausas
+        {
+            get { return _posiblesCausas; }
+            set
+            {
+                _posiblesCausas = value?.Trim();
+            }
+        }
+
+        public decimal CostoEstimado
+        {
+            get { return _costoEstimado; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("El costo estimado no puede ser negativo.");
+
+                _costoEstimado = value;
+            }
+        }
+
+        public bool Activo
+        {
+            get { return _activo; }
+            set { _activo = value; }
+        }
+
+        
         // CONSTRUCTORES
-      
+        
+
         public Problema()
         {
-
+            Activo = true;
+            CostoEstimado = 0;
         }
 
-        public Problema(string nombre, string informacionCliente)
+        public Problema(
+            string nombre,
+            string descripcion,
+            string posiblesCausas,
+            decimal costoEstimado,
+            bool activo = true)
         {
             Nombre = nombre;
-            InformacionCliente = informacionCliente;
+            Descripcion = descripcion;
+            PosiblesCausas = posiblesCausas;
+            CostoEstimado = costoEstimado;
+            Activo = activo;
         }
 
-
+        
         // MÉTODOS
+        
 
-        //pa que no imprima todo el objeto, sino solo el nombre del problema
         public override string ToString()
         {
             return Nombre;

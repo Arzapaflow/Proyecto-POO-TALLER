@@ -10,6 +10,44 @@ namespace Proyecto1.Repositorios
 {
     public class TecnicoRepository : ITecnicoRepository
     {
+        private int ObtenerIdEspecialidad(Especialidad especialidad)
+        {
+            switch (especialidad)
+            {
+                case Especialidad.AppleMoviles:
+                case Especialidad.AndroidMoviles:
+                    return 1; // Celulares
+
+                case Especialidad.AppleComputadoras:
+                case Especialidad.ComputadorasWindows:
+                    return 2; // Computadoras
+
+                case Especialidad.PConsolas:
+                    return 3; // Consolas
+
+                default:
+                    return 4; // Electrónica
+            }
+        }
+
+        private Especialidad ObtenerEspecialidad(int idEspecialidad)
+        {
+            switch (idEspecialidad)
+            {
+                case 1:
+                    return Especialidad.AppleMoviles;
+
+                case 2:
+                    return Especialidad.ComputadorasWindows;
+
+                case 3:
+                    return Especialidad.PConsolas;
+
+                default:
+                    return Especialidad.Otros;
+            }
+        }
+
         public bool Insertar(Tecnico tecnico)
         {
             using (SQLiteConnection conexion = ConexionBD.CrearConexion())
@@ -129,42 +167,5 @@ namespace Proyecto1.Repositorios
 
             return lista;
         }
-    }
-}
-private int ObtenerIdEspecialidad(Especialidad especialidad)
-{
-    switch (especialidad)
-    {
-        case Especialidad.AppleMoviles:
-        case Especialidad.AndroidMoviles:
-            return 1; // Celulares
-
-        case Especialidad.AppleComputadoras:
-        case Especialidad.ComputadorasWindows:
-            return 2; // Computadoras
-
-        case Especialidad.PConsolas:
-            return 3; // Consolas
-
-        default:
-            return 4; // Electrónica
-    }
-}
-
-private Especialidad ObtenerEspecialidad(int idEspecialidad)
-{
-    switch (idEspecialidad)
-    {
-        case 1:
-            return Especialidad.AppleMoviles;
-
-        case 2:
-            return Especialidad.ComputadorasWindows;
-
-        case 3:
-            return Especialidad.PConsolas;
-
-        default:
-            return Especialidad.Otros;
     }
 }

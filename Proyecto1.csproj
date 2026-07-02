@@ -133,13 +133,25 @@
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\AdministradorRepository.cs" />
     <Compile Include="Repositorios\ClienteRepository.cs" />
     <Compile Include="Repositorios\EmpleadoRepository.cs" />
+    <Compile Include="Repositorios\EquipoRepository.cs" />
+    <Compile Include="Repositorios\Interfaces\IAdministradorRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IClienteRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IEmpleadoRepository.cs" />
+    <Compile Include="Repositorios\Interfaces\IEquipoRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IMaterialRepository.cs" />
+    <Compile Include="Repositorios\Interfaces\IProblemaRepository.cs" />
+    <Compile Include="Repositorios\Interfaces\IRecepcionistaRepository.cs" />
+    <Compile Include="Repositorios\Interfaces\ITecnicoRepository.cs" />
+    <Compile Include="Repositorios\Interfaces\ITipoEquipoRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IUsuarioRepository.cs" />
     <Compile Include="Repositorios\MaterialRepository.cs" />
+    <Compile Include="Repositorios\ProblemaRepository.cs" />
+    <Compile Include="Repositorios\RecepcionistaRepository.cs" />
+    <Compile Include="Repositorios\TecnicoRepository.cs" />
+    <Compile Include="Repositorios\TipoEquipoRepository.cs" />
     <Compile Include="Repositorios\UsuarioRepository.cs" />
   </ItemGroup>
   <ItemGroup>
