@@ -142,15 +142,19 @@
     <Compile Include="Repositorios\Interfaces\IEmpleadoRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IEquipoRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IMaterialRepository.cs" />
+    <Compile Include="Repositorios\Interfaces\IMovimientoInventarioRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IProblemaRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IRecepcionistaRepository.cs" />
     <Compile Include="Repositorios\Interfaces\ITecnicoRepository.cs" />
+    <Compile Include="Repositorios\Interfaces\ITicketRepository.cs" />
     <Compile Include="Repositorios\Interfaces\ITipoEquipoRepository.cs" />
     <Compile Include="Repositorios\Interfaces\IUsuarioRepository.cs" />
     <Compile Include="Repositorios\MaterialRepository.cs" />
+    <Compile Include="Repositorios\MovimientoInventarioRepository.cs" />
     <Compile Include="Repositorios\ProblemaRepository.cs" />
     <Compile Include="Repositorios\RecepcionistaRepository.cs" />
     <Compile Include="Repositorios\TecnicoRepository.cs" />
+    <Compile Include="Repositorios\TicketRepository.cs" />
     <Compile Include="Repositorios\TipoEquipoRepository.cs" />
     <Compile Include="Repositorios\UsuarioRepository.cs" />
   </ItemGroup>

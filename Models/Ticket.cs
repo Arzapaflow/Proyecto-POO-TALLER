@@ -15,7 +15,6 @@ namespace Proyecto1.Models
         // ==========================
 
         private int _id;
-        private string _folio;
 
         private Equipo _equipo;
         private Problema _problema;
@@ -35,7 +34,7 @@ namespace Proyecto1.Models
         private EstadoTicket _estado;
 
         private decimal _costoEstimado;
-        private decimal _costoFinal;
+        private decimal? _costoFinal;
         private int _garantiaDias;
 
         // ==========================
@@ -46,18 +45,6 @@ namespace Proyecto1.Models
         {
             get { return _id; }
             set { _id = value; }
-        }
-
-        public string Folio
-        {
-            get { return _folio; }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El folio no puede estar vacío.");
-
-                _folio = value.Trim();
-            }
         }
 
         public Equipo Equipo
@@ -99,7 +86,10 @@ namespace Proyecto1.Models
         public Tecnico TecnicoAsignado
         {
             get { return _tecnicoAsignado; }
-            set { _tecnicoAsignado = value; }
+            set
+            {
+                _tecnicoAsignado = value;
+            }
         }
 
         public string DescripcionFalla
@@ -108,7 +98,7 @@ namespace Proyecto1.Models
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("La descripción de la falla no puede estar vacía.");
+                    throw new ArgumentException("Debe describirse la falla reportada por el cliente.");
 
                 _descripcionFalla = value.Trim();
             }
@@ -117,13 +107,19 @@ namespace Proyecto1.Models
         public string Diagnostico
         {
             get { return _diagnostico; }
-            set { _diagnostico = value?.Trim(); }
+            set
+            {
+                _diagnostico = value?.Trim();
+            }
         }
 
         public string SolucionAplicada
         {
             get { return _solucionAplicada; }
-            set { _solucionAplicada = value?.Trim(); }
+            set
+            {
+                _solucionAplicada = value?.Trim();
+            }
         }
 
         public string Prioridad
@@ -132,40 +128,63 @@ namespace Proyecto1.Models
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Debe indicar la prioridad.");
+                    throw new ArgumentException("Debe indicar una prioridad.");
 
-                _prioridad = value.Trim();
+                if (value != "Baja" &&
+                    value != "Normal" &&
+                    value != "Alta" &&
+                    value != "Urgente")
+                {
+                    throw new ArgumentException("Prioridad inválida.");
+                }
+
+                _prioridad = value;
             }
         }
 
         public string Observaciones
         {
             get { return _observaciones; }
-            set { _observaciones = value?.Trim(); }
+            set
+            {
+                _observaciones = value?.Trim();
+            }
         }
 
         public DateTime FechaIngreso
         {
             get { return _fechaIngreso; }
-            set { _fechaIngreso = value; }
+            set
+            {
+                _fechaIngreso = value;
+            }
         }
 
         public DateTime? FechaAsignacionTecnico
         {
             get { return _fechaAsignacionTecnico; }
-            set { _fechaAsignacionTecnico = value; }
+            set
+            {
+                _fechaAsignacionTecnico = value;
+            }
         }
 
         public DateTime? FechaEntrega
         {
             get { return _fechaEntrega; }
-            set { _fechaEntrega = value; }
+            set
+            {
+                _fechaEntrega = value;
+            }
         }
 
         public EstadoTicket Estado
         {
             get { return _estado; }
-            set { _estado = value; }
+            set
+            {
+                _estado = value;
+            }
         }
 
         public decimal CostoEstimado
@@ -180,12 +199,12 @@ namespace Proyecto1.Models
             }
         }
 
-        public decimal CostoFinal
+        public decimal? CostoFinal
         {
             get { return _costoFinal; }
             set
             {
-                if (value < 0)
+                if (value.HasValue && value.Value < 0)
                     throw new ArgumentException("El costo final no puede ser negativo.");
 
                 _costoFinal = value;
@@ -214,30 +233,32 @@ namespace Proyecto1.Models
             Estado = EstadoTicket.EnEspera;
             Prioridad = "Normal";
             CostoEstimado = 0;
-            CostoFinal = 0;
+            CostoFinal = null;
             GarantiaDias = 0;
         }
 
         public Ticket(
-            string folio,
             Equipo equipo,
             Problema problema,
             Recepcionista recepcionista,
             string descripcionFalla)
         {
-            Folio = folio;
             Equipo = equipo;
             Problema = problema;
             Recepcionista = recepcionista;
+
             DescripcionFalla = descripcionFalla;
 
             FechaIngreso = DateTime.Now;
-
             Estado = EstadoTicket.EnEspera;
             Prioridad = "Normal";
 
+            Diagnostico = string.Empty;
+            SolucionAplicada = string.Empty;
+            Observaciones = string.Empty;
+
             CostoEstimado = 0;
-            CostoFinal = 0;
+            CostoFinal = null;
             GarantiaDias = 0;
         }
 
@@ -247,7 +268,7 @@ namespace Proyecto1.Models
 
         public override string ToString()
         {
-            return $"{Folio} - {Equipo}";
+            return $"{Equipo} - {Estado}";
         }
     }
 }

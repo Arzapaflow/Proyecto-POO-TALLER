@@ -4,26 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Proyecto1.Models
 {
-
     public class MovimientoInventario
     {
-     
+        // ==========================
         // ATRIBUTOS
-  
+        // ==========================
 
         private int _id;
         private Material _material;
-        private int _cantidad;
-        private DateTime _fecha;
         private Ticket _ticket;
         private Tecnico _tecnico;
+
+        private string _tipoMovimiento;
+        private int _cantidad;
+
         private decimal _costoUnitario;
 
- 
+        private DateTime _fecha;
+
+        private string _observaciones;
+
+        // ==========================
         // PROPIEDADES
-   
+        // ==========================
 
         public int Id
         {
@@ -43,6 +49,30 @@ namespace Proyecto1.Models
             }
         }
 
+        public Ticket Ticket
+        {
+            get { return _ticket; }
+            set { _ticket = value; }
+        }
+
+        public Tecnico Tecnico
+        {
+            get { return _tecnico; }
+            set { _tecnico = value; }
+        }
+
+        public string TipoMovimiento
+        {
+            get { return _tipoMovimiento; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Debe indicar el tipo de movimiento.");
+
+                _tipoMovimiento = value.Trim();
+            }
+        }
+
         public int Cantidad
         {
             get { return _cantidad; }
@@ -52,36 +82,6 @@ namespace Proyecto1.Models
                     throw new ArgumentException("La cantidad debe ser mayor a cero.");
 
                 _cantidad = value;
-            }
-        }
-
-        public DateTime Fecha
-        {
-            get { return _fecha; }
-            private set { _fecha = value; }
-        }
-
-        public Ticket Ticket
-        {
-            get { return _ticket; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(Ticket));
-
-                _ticket = value;
-            }
-        }
-
-        public Tecnico Tecnico
-        {
-            get { return _tecnico; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(Tecnico));
-
-                _tecnico = value;
             }
         }
 
@@ -97,22 +97,34 @@ namespace Proyecto1.Models
             }
         }
 
-   
-        // Operación costo
-    
+        public DateTime Fecha
+        {
+            get { return _fecha; }
+            set { _fecha = value; }
+        }
+
+        public string Observaciones
+        {
+            get { return _observaciones; }
+            set
+            {
+                _observaciones = value?.Trim();
+            }
+        }
 
         public decimal CostoTotal
         {
             get { return Cantidad * CostoUnitario; }
         }
 
-      
+        // ==========================
         // CONSTRUCTORES
-        
+        // ==========================
 
         public MovimientoInventario()
         {
-            Fecha = DateTime.Now; //Para que se vea cuando se hizo el movimiento
+            Fecha = DateTime.Now;
+            TipoMovimiento = "Salida";
         }
 
         public MovimientoInventario(
@@ -120,24 +132,28 @@ namespace Proyecto1.Models
             int cantidad,
             Ticket ticket,
             Tecnico tecnico,
-            decimal costoUnitario)
+            decimal costoUnitario,
+            string tipoMovimiento,
+            string observaciones = "")
         {
             Material = material;
             Cantidad = cantidad;
             Ticket = ticket;
             Tecnico = tecnico;
             CostoUnitario = costoUnitario;
+            TipoMovimiento = tipoMovimiento;
+            Observaciones = observaciones;
 
-            Fecha = DateTime.Now;  
+            Fecha = DateTime.Now;
         }
 
-       
+        // ==========================
         // MÉTODOS
-        
+        // ==========================
 
         public override string ToString()
         {
-            return $"{Material.Nombre} - {Cantidad} unidades";
+            return $"{TipoMovimiento}: {Material.Nombre} ({Cantidad})";
         }
     }
 }
