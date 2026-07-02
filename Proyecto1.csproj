@@ -110,6 +110,7 @@
     <Content Include="Database\03_Personas.sql" />
     <Content Include="Database\04_Operacion.sql" />
     <Content Include="Database\05_DatosIniciales.sql" />
+    <Content Include="Database\SQLite\01_CrearBaseSQLite.sql" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmLogin.resx">
