@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Proyecto1.Models;
-using Proyecto1.Repositorios;
-
+using Proyecto1.Services;
+using Proyecto1.Services.Interfaces;
 
 namespace Proyecto1
 {
     public partial class FrmLogin : Form
     {
+        private readonly IUsuarioService _usuarioService;
+
         public FrmLogin()
         {
             InitializeComponent();
 
-            btnIngresar.Click += btnIngresar_Click;
+            _usuarioService = new UsuarioService();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -29,7 +24,7 @@ namespace Proyecto1
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e)
@@ -59,11 +54,11 @@ namespace Proyecto1
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            string usuario = txtUsuario.Text.Trim();
-            string password = txtPassword.Text;
+            string nombreUsuario = txtUsuario.Text.Trim();
+            string contrasena = txtPassword.Text;
 
-            if (string.IsNullOrWhiteSpace(usuario) ||
-                string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(nombreUsuario) ||
+                string.IsNullOrWhiteSpace(contrasena))
             {
                 MessageBox.Show(
                     "Ingresa el usuario y la contraseña.",
@@ -77,48 +72,35 @@ namespace Proyecto1
 
             try
             {
-                using (System.Data.SQLite.SQLiteConnection conexion =
-                       Database.ConexionBD.CrearConexion())
+                Usuario usuario = _usuarioService.Autenticar(
+                    nombreUsuario,
+                    contrasena
+                );
+
+                if (usuario != null)
                 {
-                    string consulta = @"
-                SELECT COUNT(*)
-                FROM Usuarios
-                WHERE NombreUsuario = @NombreUsuario
-                  AND Contrasena = @Contrasena
-                  AND Activo = 1;";
+                    MessageBox.Show(
+                        "Inicio de sesión correcto.",
+                        "Bienvenido",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
 
-                    using (System.Data.SQLite.SQLiteCommand comando =
-                           new System.Data.SQLite.SQLiteCommand(consulta, conexion))
-                    {
-                        comando.Parameters.AddWithValue("@NombreUsuario", usuario);
-                        comando.Parameters.AddWithValue("@Contrasena", password);
+                    txtPassword.Clear();
 
-                        conexion.Open();
+                    // Después aquí abriremos el formulario principal.
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Usuario o contraseña incorrectos.",
+                        "Acceso denegado",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
 
-                        int resultado = Convert.ToInt32(comando.ExecuteScalar());
-
-                        if (resultado > 0)
-                        {
-                            MessageBox.Show(
-                                "Inicio de sesión correcto.",
-                                "Bienvenido",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information
-                            );
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                "Usuario o contraseña incorrectos.",
-                                "Acceso denegado",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-
-                            txtPassword.Clear();
-                            txtPassword.Focus();
-                        }
-                    }
+                    txtPassword.Clear();
+                    txtPassword.Focus();
                 }
             }
             catch (Exception ex)
@@ -132,6 +114,4 @@ namespace Proyecto1
             }
         }
     }
-        
-    
 }

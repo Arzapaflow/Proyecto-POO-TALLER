@@ -157,6 +157,28 @@
     <Compile Include="Repositorios\TicketRepository.cs" />
     <Compile Include="Repositorios\TipoEquipoRepository.cs" />
     <Compile Include="Repositorios\UsuarioRepository.cs" />
+    <Compile Include="Services\AdministradorService.cs" />
+    <Compile Include="Services\EmpleadoService.cs" />
+    <Compile Include="Services\EquipoService.cs" />
+    <Compile Include="Services\Interfaces\IAdministradorService.cs" />
+    <Compile Include="Services\Interfaces\IEmpleadoService.cs" />
+    <Compile Include="Services\Interfaces\IEquipoService.cs" />
+    <Compile Include="Services\Interfaces\IMaterialService.cs" />
+    <Compile Include="Services\Interfaces\IMovimientoInventarioService.cs" />
+    <Compile Include="Services\Interfaces\IProblemaService.cs" />
+    <Compile Include="Services\Interfaces\IRecepcionistaService.cs" />
+    <Compile Include="Services\Interfaces\ITecnicoService.cs" />
+    <Compile Include="Services\Interfaces\ITicketService.cs" />
+    <Compile Include="Services\Interfaces\ITipoEquipoService.cs" />
+    <Compile Include="Services\Interfaces\IUsuarioService.cs" />
+    <Compile Include="Services\MaterialService.cs" />
+    <Compile Include="Services\MovimientoInventarioService.cs" />
+    <Compile Include="Services\ProblemaService.cs" />
+    <Compile Include="Services\RecepcionistaService.cs" />
+    <Compile Include="Services\TecnicoService.cs" />
+    <Compile Include="Services\TicketService.cs" />
+    <Compile Include="Services\TipoEquipoService.cs" />
+    <Compile Include="Services\UsuarioService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -171,7 +193,6 @@
   <ItemGroup>
     <Folder Include="Forms\" />
     <Folder Include="Recursos\" />
-    <Folder Include="Services\" />
     <Folder Include="Utilidades\" />
   </ItemGroup>
   <ItemGroup>
