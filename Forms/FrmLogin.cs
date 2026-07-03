@@ -1,8 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using Proyecto1.Forms;
 using Proyecto1.Models;
 using Proyecto1.Services;
 using Proyecto1.Services.Interfaces;
+using System;
+using System.Windows.Forms;
 
 namespace Proyecto1
 {
@@ -88,7 +89,16 @@ namespace Proyecto1
 
                     txtPassword.Clear();
 
-                    // Después aquí abriremos el formulario principal.
+                    this.Hide();
+
+                    FrmPrincipal frmPrincipal = new FrmPrincipal();
+
+                    frmPrincipal.FormClosed += (s, args) =>
+                    {
+                        this.Close();
+                    };
+
+                    frmPrincipal.Show();
                 }
                 else
                 {
