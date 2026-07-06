@@ -4,6 +4,7 @@ using Proyecto1.Services;
 using Proyecto1.Services.Interfaces;
 using System;
 using System.Windows.Forms;
+using Proyecto1.Models.Enums;
 
 namespace Proyecto1
 {
@@ -86,19 +87,44 @@ namespace Proyecto1
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                     );
-
                     txtPassword.Clear();
 
                     this.Hide();
 
-                    FrmPrincipal frmPrincipal = new FrmPrincipal();
+                    Form menu = null;
 
-                    frmPrincipal.FormClosed += (s, args) =>
+                    switch (usuario.IdRol)
+                    {
+                        case 1: 
+                            menu = new FrmMenuAdministrador();
+                            break;
+
+                        case 2: 
+                            menu = new FrmMenuRecepcionista();
+                            break;
+
+                        case 3: 
+                            menu = new FrmMenuTecnico();
+                            break;
+
+                        default:
+                            MessageBox.Show(
+                                "El rol del usuario no es válido.",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+
+                            this.Show();
+                            return;
+                    }
+
+                    menu.FormClosed += (s, args) =>
                     {
                         this.Close();
                     };
 
-                    frmPrincipal.Show();
+                    menu.Show();
                 }
                 else
                 {

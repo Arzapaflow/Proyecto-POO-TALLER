@@ -7,5 +7,6 @@
   <Project Path="Proyecto1.csproj" Id="c9ddeb49-8227-4ff2-beb7-19547c14afd3">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="Debug|Any CPU" Project="x64" />
   </Project>
 </Solution>
