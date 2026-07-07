@@ -23,9 +23,20 @@ namespace Proyecto1.Forms
         private readonly IEquipoRepository _equipoRepository;
         private readonly ITicketService _ticketService;
         private readonly IRecepcionistaRepository _recepcionistaRepository;
+        private int _idTicketSeleccionado = 0;
         public FrmTickets()
         {
             InitializeComponent();
+            dgvTickets.AutoGenerateColumns = false;
+            dgvTickets.Columns.Clear();
+
+            dgvTickets.Columns.Add("Id", "Folio");
+            dgvTickets.Columns.Add("Cliente", "Cliente");
+            dgvTickets.Columns.Add("Equipo", "Equipo");
+            dgvTickets.Columns.Add("Problema", "Problema");
+            dgvTickets.Columns.Add("Prioridad", "Prioridad");
+            dgvTickets.Columns.Add("Estado", "Estado");
+            dgvTickets.Columns.Add("Fecha", "Fecha");
 
             _clienteService = new ClienteService();
             _tipoEquipoRepository = new TipoEquipoRepository();
@@ -146,6 +157,21 @@ namespace Proyecto1.Forms
 
             int idEmpleadoActual =
                 SesionActual.Usuario.IdEmpleado;
+
+            // Si es administrador, permitir registrar tickets
+            if (SesionActual.Usuario.IdRol == 1)
+            {
+                Recepcionista recepcionistaAdmin =
+                    _recepcionistaRepository.ObtenerPorId(idEmpleadoActual);
+
+                if (recepcionistaAdmin == null)
+                {
+                    recepcionistaAdmin = new Recepcionista();
+                    recepcionistaAdmin.Id = idEmpleadoActual;
+                }
+
+                return recepcionistaAdmin;
+            }
 
             Recepcionista recepcionista =
                 _recepcionistaRepository.ObtenerPorId(
@@ -359,7 +385,10 @@ namespace Proyecto1.Forms
                     "Registro correcto",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
+                    
                 );
+
+                CargarTickets();
 
                 LimpiarFormulario();
             }
@@ -391,5 +420,198 @@ namespace Proyecto1.Forms
                 );
             }
         }
+        
+
+        private void FrmTickets_Load(object sender, EventArgs e)
+        {
+            CargarClientes();
+            CargarTiposEquipo();
+            CargarProblemas();
+
+            CargarTickets();
+        }
+        private void CargarTickets()
+        {
+            dgvTickets.Rows.Clear();
+
+            foreach (Ticket ticket in _ticketService.ObtenerTodos())
+            {
+                dgvTickets.Rows.Add(
+                    ticket.Id,
+                    ticket.Equipo.Cliente.Nombre,
+                    ticket.Equipo.TipoEquipo.Nombre + " - " +
+                    ticket.Equipo.Marca + " " +
+                    ticket.Equipo.Modelo,
+                    ticket.Problema.Nombre,
+                    ticket.Prioridad,
+                    ticket.Estado.ToString(),
+                    ticket.FechaIngreso.ToShortDateString()
+                );
+            }
+        }
+        private void dgvTickets_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            _idTicketSeleccionado =
+                Convert.ToInt32(dgvTickets.Rows[e.RowIndex].Cells[0].Value);
+
+            Ticket ticket =
+                _ticketService.ObtenerPorId(_idTicketSeleccionado);
+
+            if (ticket == null)
+                return;
+
+            cmbCliente.SelectedValue =
+                ticket.Equipo.Cliente.Id;
+
+            cmbTipoEquipo.SelectedValue =
+                ticket.Equipo.TipoEquipo.Id;
+
+            cmbProblema.SelectedValue =
+                ticket.Problema.Id;
+
+            txtMarca.Text =
+                ticket.Equipo.Marca;
+
+            txtModelo.Text =
+                ticket.Equipo.Modelo;
+
+            txtColor.Text =
+                ticket.Equipo.Color;
+
+            txtNumeroSerie.Text =
+                ticket.Equipo.NumeroSerie;
+
+            txtAccesorios.Text =
+                ticket.Equipo.Accesorios;
+
+            txtObservacionesEquipo.Text =
+                ticket.Equipo.Observaciones;
+
+            txtDescripcionFalla.Text =
+                ticket.DescripcionFalla;
+
+            cmbPrioridad.SelectedItem =
+                ticket.Prioridad;
+
+            txtObservacionesTicket.Text =
+                ticket.Observaciones;
+        }
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (_idTicketSeleccionado <= 0)
+            {
+                MessageBox.Show(
+                    "Seleccione un ticket.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            try
+            {
+                Ticket ticket = _ticketService.ObtenerPorId(_idTicketSeleccionado);
+
+                if (ticket == null)
+                {
+                    MessageBox.Show("El ticket ya no existe.");
+                    return;
+                }
+
+                ticket.Problema.Id =
+                    Convert.ToInt32(cmbProblema.SelectedValue);
+
+                ticket.DescripcionFalla =
+                    txtDescripcionFalla.Text.Trim();
+
+                ticket.Prioridad =
+                    cmbPrioridad.Text;
+
+                ticket.Observaciones =
+                    txtObservacionesTicket.Text.Trim();
+
+                ticket.CostoEstimado =
+                    decimal.Parse(txtCostoEstimado.Text);
+                ticket.Equipo.Cliente = (Cliente)cmbCliente.SelectedItem;
+                ticket.Equipo.TipoEquipo = (TipoEquipo)cmbTipoEquipo.SelectedItem;
+                ticket.Equipo.Marca = txtMarca.Text.Trim();
+                ticket.Equipo.Modelo = txtModelo.Text.Trim();
+                ticket.Equipo.Color = txtColor.Text.Trim();
+                ticket.Equipo.NumeroSerie = txtNumeroSerie.Text.Trim();
+                ticket.Equipo.Accesorios = txtAccesorios.Text.Trim();
+                ticket.Equipo.Observaciones = txtObservacionesEquipo.Text.Trim();
+
+                bool actualizado =
+                    _ticketService.Actualizar(ticket);
+
+                if (actualizado)
+                {
+                    MessageBox.Show(
+                        "Ticket actualizado correctamente.");
+
+                    CargarTickets();
+
+                    LimpiarFormulario();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "No se pudo actualizar.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (_idTicketSeleccionado <= 0)
+            {
+                MessageBox.Show(
+                    "Seleccione un ticket.");
+                return;
+            }
+
+            DialogResult respuesta =
+                MessageBox.Show(
+                    "¿Desea eliminar el ticket seleccionado?",
+                    "Confirmar",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+            if (respuesta != DialogResult.Yes)
+                return;
+
+            try
+            {
+                bool eliminado =
+                    _ticketService.Eliminar(_idTicketSeleccionado);
+
+                if (eliminado)
+                {
+                    MessageBox.Show(
+                        "Ticket eliminado correctamente.");
+
+                    CargarTickets();
+
+                    LimpiarFormulario();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "No se pudo eliminar.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
+
 }

@@ -1,4 +1,4 @@
-﻿/*==========================================================
+/*==========================================================
     PROYECTO: Sistema de Gestión para Taller de Reparaciones
     ARCHIVO: 02_DatosInicialesSQLite.sql
     BASE DE DATOS: SQLite
@@ -6,7 +6,7 @@
 
 PRAGMA foreign_keys = ON;
 
-BEGIN TRANSACTION;
+
 
 
 /*==========================================================
@@ -290,4 +290,4 @@ INNER JOIN Roles
 WHERE Empleados.Correo = 'admin@taller.local';
 
 
-COMMIT;
+

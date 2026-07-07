@@ -67,14 +67,14 @@ namespace Proyecto1.Repositorios
 
                 conexion.Open();
 
-                SQLiteDataReader reader = comando.ExecuteReader();
+                using (SQLiteDataReader reader = comando.ExecuteReader())
 
-                if (reader.Read())
-                {
-                    recepcionista = new Recepcionista();
+                    if (reader.Read())
+                    {
+                        recepcionista = new Recepcionista();
 
-                    recepcionista.Id = Convert.ToInt32(reader["IdEmpleado"]);
-                }
+                        recepcionista.Id = Convert.ToInt32(reader["IdEmpleado"]);
+                    }
             }
 
             return recepcionista;

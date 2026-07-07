@@ -253,9 +253,45 @@ namespace Proyecto1.Repositorios
 
             using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"SELECT *
-                                    FROM Tickets
-                                    WHERE IdTicket = @IdTicket";
+                string consulta = @"
+        SELECT
+
+            t.*,
+
+            e.Marca,
+            e.Modelo,
+            e.Color,
+            e.NumeroSerie,
+            e.Accesorios,
+            e.Observaciones AS ObservacionesEquipo,
+
+            c.IdCliente,
+            c.Nombre AS NombreCliente,
+
+            te.IdTipoEquipo,
+            te.Nombre AS NombreTipoEquipo,
+
+            p.Nombre AS NombreProblema,
+            p.Descripcion,
+            p.PosiblesCausas,
+            p.CostoEstimado,
+            p.Activo
+
+        FROM Tickets t
+
+        INNER JOIN Equipos e
+            ON t.IdEquipo = e.IdEquipo
+
+        INNER JOIN Clientes c
+            ON e.IdCliente = c.IdCliente
+
+        INNER JOIN TipoEquipos te
+            ON e.IdTipoEquipo = te.IdTipoEquipo
+
+        INNER JOIN Problemas p
+            ON t.IdProblema = p.IdProblema
+
+        WHERE t.IdTicket = @IdTicket";
 
                 SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
 
@@ -263,56 +299,124 @@ namespace Proyecto1.Repositorios
 
                 conexion.Open();
 
-                SQLiteDataReader reader = comando.ExecuteReader();
-
-                if (reader.Read())
+                using (SQLiteDataReader reader = comando.ExecuteReader())
                 {
-                    ticket = new Ticket();
-
-                    ticket.Id = Convert.ToInt32(reader["IdTicket"]);
-
-                    ticket.Equipo = new Equipo();
-                    ticket.Equipo.Id = Convert.ToInt32(reader["IdEquipo"]);
-
-                    ticket.Problema = new Problema();
-                    ticket.Problema.Id = Convert.ToInt32(reader["IdProblema"]);
-
-                    ticket.Recepcionista = new Recepcionista();
-                    ticket.Recepcionista.Id = Convert.ToInt32(reader["IdRecepcionista"]);
-
-                    if (reader["IdTecnico"] != DBNull.Value)
+                    if (reader.Read())
                     {
-                        ticket.TecnicoAsignado = new Tecnico();
-                        ticket.TecnicoAsignado.Id = Convert.ToInt32(reader["IdTecnico"]);
+                        ticket = new Ticket();
+
+                        ticket.Id = Convert.ToInt32(reader["IdTicket"]);
+
+                        ticket.Equipo = new Equipo();
+
+                        ticket.Equipo.Id =
+                            Convert.ToInt32(reader["IdEquipo"]);
+
+                        ticket.Equipo.Marca =
+                            reader["Marca"].ToString();
+
+                        ticket.Equipo.Modelo =
+                            reader["Modelo"].ToString();
+
+                        ticket.Equipo.Color =
+                            reader["Color"].ToString();
+
+                        ticket.Equipo.NumeroSerie =
+                            reader["NumeroSerie"].ToString();
+
+                        ticket.Equipo.Accesorios =
+                            reader["Accesorios"].ToString();
+
+                        ticket.Equipo.Observaciones =
+                            reader["ObservacionesEquipo"].ToString();
+
+                        ticket.Equipo.Cliente = new Cliente();
+
+                        ticket.Equipo.Cliente.Id =
+                            Convert.ToInt32(reader["IdCliente"]);
+
+                        ticket.Equipo.Cliente.Nombre =
+                            reader["NombreCliente"].ToString();
+
+                        ticket.Equipo.TipoEquipo = new TipoEquipo();
+
+                        ticket.Equipo.TipoEquipo.Id =
+                            Convert.ToInt32(reader["IdTipoEquipo"]);
+
+                        ticket.Equipo.TipoEquipo.Nombre =
+                            reader["NombreTipoEquipo"].ToString();
+
+                        ticket.Problema = new Problema();
+
+                        ticket.Problema.Id =
+                            Convert.ToInt32(reader["IdProblema"]);
+
+                        ticket.Problema.Nombre =
+                            reader["NombreProblema"].ToString();
+
+                        ticket.Problema.Descripcion =
+                            reader["Descripcion"].ToString();
+
+                        ticket.Problema.PosiblesCausas =
+                            reader["PosiblesCausas"].ToString();
+
+                        ticket.Problema.CostoEstimado =
+                            Convert.ToDecimal(reader["CostoEstimado"]);
+
+                        ticket.Problema.Activo =
+                            Convert.ToInt32(reader["Activo"]) == 1;
+
+                        ticket.Recepcionista = new Recepcionista();
+                        ticket.Recepcionista.Id =
+                            Convert.ToInt32(reader["IdRecepcionista"]);
+
+                        if (reader["IdTecnico"] != DBNull.Value)
+                        {
+                            ticket.TecnicoAsignado = new Tecnico();
+
+                            ticket.TecnicoAsignado.Id =
+                                Convert.ToInt32(reader["IdTecnico"]);
+                        }
+
+                        ticket.Estado =
+                            ObtenerEstado(Convert.ToInt32(reader["IdEstado"]));
+
+                        ticket.DescripcionFalla =
+                            reader["DescripcionFalla"].ToString();
+
+                        ticket.Diagnostico =
+                            reader["Diagnostico"].ToString();
+
+                        ticket.SolucionAplicada =
+                            reader["SolucionAplicada"].ToString();
+
+                        ticket.Prioridad =
+                            reader["Prioridad"].ToString();
+
+                        ticket.Observaciones =
+                            reader["Observaciones"].ToString();
+
+                        ticket.FechaIngreso =
+                            Convert.ToDateTime(reader["FechaIngreso"]);
+
+                        if (reader["FechaAsignacionTecnico"] != DBNull.Value)
+                            ticket.FechaAsignacionTecnico =
+                                Convert.ToDateTime(reader["FechaAsignacionTecnico"]);
+
+                        if (reader["FechaEntrega"] != DBNull.Value)
+                            ticket.FechaEntrega =
+                                Convert.ToDateTime(reader["FechaEntrega"]);
+
+                        ticket.CostoEstimado =
+                            Convert.ToDecimal(reader["CostoEstimado"]);
+
+                        if (reader["CostoFinal"] != DBNull.Value)
+                            ticket.CostoFinal =
+                                Convert.ToDecimal(reader["CostoFinal"]);
+
+                        ticket.GarantiaDias =
+                            Convert.ToInt32(reader["GarantiaDias"]);
                     }
-
-                    ticket.Estado = ObtenerEstado(Convert.ToInt32(reader["IdEstado"]));
-
-                    ticket.DescripcionFalla = reader["DescripcionFalla"].ToString();
-                    ticket.Diagnostico = reader["Diagnostico"].ToString();
-                    ticket.SolucionAplicada = reader["SolucionAplicada"].ToString();
-                    ticket.Prioridad = reader["Prioridad"].ToString();
-                    ticket.Observaciones = reader["Observaciones"].ToString();
-
-                    ticket.FechaIngreso = Convert.ToDateTime(reader["FechaIngreso"]);
-
-                    if (reader["FechaAsignacionTecnico"] != DBNull.Value)
-                        ticket.FechaAsignacionTecnico =
-                            Convert.ToDateTime(reader["FechaAsignacionTecnico"]);
-
-                    if (reader["FechaEntrega"] != DBNull.Value)
-                        ticket.FechaEntrega =
-                            Convert.ToDateTime(reader["FechaEntrega"]);
-
-                    ticket.CostoEstimado =
-                        Convert.ToDecimal(reader["CostoEstimado"]);
-
-                    if (reader["CostoFinal"] != DBNull.Value)
-                        ticket.CostoFinal =
-                            Convert.ToDecimal(reader["CostoFinal"]);
-
-                    ticket.GarantiaDias =
-                        Convert.ToInt32(reader["GarantiaDias"]);
                 }
             }
 
@@ -325,8 +429,42 @@ namespace Proyecto1.Repositorios
 
             using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"SELECT *
-                                    FROM Tickets";
+                string consulta = @"
+                                    SELECT
+                                    t.IdTicket,
+                                    t.DescripcionFalla,
+                                    t.Prioridad,
+                                    t.FechaIngreso,
+                                    t.IdEstado,
+
+                                    p.IdProblema,
+                                    p.Nombre AS NombreProblema,
+
+                                    e.IdEquipo,
+                                    e.Marca,
+                                    e.Modelo,
+
+                                    c.IdCliente,
+                                    c.Nombre AS NombreCliente,
+
+                                    te.IdTipoEquipo,
+                                    te.Nombre AS NombreTipoEquipo
+
+                                    FROM Tickets t
+
+                                    INNER JOIN Equipos e
+                                        ON t.IdEquipo = e.IdEquipo
+
+                                    INNER JOIN Clientes c
+                                        ON e.IdCliente = c.IdCliente
+
+                                    INNER JOIN TipoEquipos te
+                                        ON e.IdTipoEquipo = te.IdTipoEquipo
+
+                                    INNER JOIN Problemas p
+                                        ON t.IdProblema = p.IdProblema
+
+                                    ORDER BY t.IdTicket DESC;";
 
                 SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
 
@@ -342,52 +480,30 @@ namespace Proyecto1.Repositorios
 
                     ticket.Equipo = new Equipo();
                     ticket.Equipo.Id = Convert.ToInt32(reader["IdEquipo"]);
+                    ticket.Equipo.Marca = reader["Marca"].ToString();
+                    ticket.Equipo.Modelo = reader["Modelo"].ToString();
+
+                    ticket.Equipo.Cliente = new Cliente();
+                    ticket.Equipo.Cliente.Id = Convert.ToInt32(reader["IdCliente"]);
+                    ticket.Equipo.Cliente.Nombre = reader["NombreCliente"].ToString();
+
+                    ticket.Equipo.TipoEquipo = new TipoEquipo();
+                    ticket.Equipo.TipoEquipo.Id = Convert.ToInt32(reader["IdTipoEquipo"]);
+                    ticket.Equipo.TipoEquipo.Nombre = reader["NombreTipoEquipo"].ToString();
 
                     ticket.Problema = new Problema();
                     ticket.Problema.Id = Convert.ToInt32(reader["IdProblema"]);
+                    ticket.Problema.Nombre = reader["NombreProblema"].ToString();
 
-                    ticket.Recepcionista = new Recepcionista();
-                    ticket.Recepcionista.Id = Convert.ToInt32(reader["IdRecepcionista"]);
-
-                    if (reader["IdTecnico"] != DBNull.Value)
-                    {
-                        ticket.TecnicoAsignado = new Tecnico();
-                        ticket.TecnicoAsignado.Id = Convert.ToInt32(reader["IdTecnico"]);
-                    }
-
-                    ticket.Estado = ObtenerEstado(Convert.ToInt32(reader["IdEstado"]));
-
-                    ticket.DescripcionFalla = reader["DescripcionFalla"].ToString();
-                    ticket.Diagnostico = reader["Diagnostico"].ToString();
-                    ticket.SolucionAplicada = reader["SolucionAplicada"].ToString();
                     ticket.Prioridad = reader["Prioridad"].ToString();
-                    ticket.Observaciones = reader["Observaciones"].ToString();
-
                     ticket.FechaIngreso = Convert.ToDateTime(reader["FechaIngreso"]);
-
-                    if (reader["FechaAsignacionTecnico"] != DBNull.Value)
-                        ticket.FechaAsignacionTecnico =
-                            Convert.ToDateTime(reader["FechaAsignacionTecnico"]);
-
-                    if (reader["FechaEntrega"] != DBNull.Value)
-                        ticket.FechaEntrega =
-                            Convert.ToDateTime(reader["FechaEntrega"]);
-
-                    ticket.CostoEstimado =
-                        Convert.ToDecimal(reader["CostoEstimado"]);
-
-                    if (reader["CostoFinal"] != DBNull.Value)
-                        ticket.CostoFinal =
-                            Convert.ToDecimal(reader["CostoFinal"]);
-
-                    ticket.GarantiaDias =
-                        Convert.ToInt32(reader["GarantiaDias"]);
+                    ticket.Estado = ObtenerEstado(Convert.ToInt32(reader["IdEstado"]));
 
                     lista.Add(ticket);
                 }
-            }
 
-            return lista;
+                return lista;
+            }
         }
     }
 }

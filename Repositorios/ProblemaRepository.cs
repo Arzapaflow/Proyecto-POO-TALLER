@@ -95,19 +95,19 @@ namespace Proyecto1.Repositorios
 
                 conexion.Open();
 
-                SQLiteDataReader reader = comando.ExecuteReader();
+                using (SQLiteDataReader reader = comando.ExecuteReader())
 
-                if (reader.Read())
-                {
-                    problema = new Problema();
+                    if (reader.Read())
+                    {
+                        problema = new Problema();
 
-                    problema.Id = Convert.ToInt32(reader["IdProblema"]);
-                    problema.Nombre = reader["Nombre"].ToString();
-                    problema.Descripcion = reader["Descripcion"].ToString();
-                    problema.PosiblesCausas = reader["PosiblesCausas"].ToString();
-                    problema.CostoEstimado = Convert.ToDecimal(reader["CostoEstimado"]);
-                    problema.Activo = Convert.ToInt32(reader["Activo"]) == 1;
-                }
+                        problema.Id = Convert.ToInt32(reader["IdProblema"]);
+                        problema.Nombre = reader["Nombre"].ToString();
+                        problema.Descripcion = reader["Descripcion"].ToString();
+                        problema.PosiblesCausas = reader["PosiblesCausas"].ToString();
+                        problema.CostoEstimado = Convert.ToDecimal(reader["CostoEstimado"]);
+                        problema.Activo = Convert.ToInt32(reader["Activo"]) == 1;
+                    }
             }
 
             return problema;

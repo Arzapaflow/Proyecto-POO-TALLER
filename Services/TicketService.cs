@@ -126,6 +126,7 @@ namespace Proyecto1.Services
             {
                 ticket.FechaEntrega = null;
             }
+            _equipoRepository.Actualizar(ticket.Equipo);
 
             return _ticketRepository.Actualizar(ticket);
         }
@@ -386,58 +387,43 @@ namespace Proyecto1.Services
 
         private void CargarReferencias(Ticket ticket)
         {
-            Equipo equipo =
-                _equipoRepository.ObtenerPorId(
-                    ticket.Equipo.Id
-                );
-
-            if (equipo == null)
+            if (_equipoRepository.ObtenerPorId(ticket.Equipo.Id) == null)
             {
                 throw new InvalidOperationException(
-                    "El equipo seleccionado no existe."
-                );
+                    "El equipo seleccionado no existe.");
             }
 
             Problema problema =
-                _problemaRepository.ObtenerPorId(
-                    ticket.Problema.Id
-                );
+                _problemaRepository.ObtenerPorId(ticket.Problema.Id);
 
             if (problema == null)
             {
                 throw new InvalidOperationException(
-                    "El problema seleccionado no existe."
-                );
+                    "El problema seleccionado no existe.");
             }
 
             Recepcionista recepcionista =
-                _recepcionistaRepository.ObtenerPorId(
-                    ticket.Recepcionista.Id
-                );
+                _recepcionistaRepository.ObtenerPorId(ticket.Recepcionista.Id);
 
             if (recepcionista == null)
             {
                 throw new InvalidOperationException(
-                    "El recepcionista seleccionado no existe."
-                );
+                    "El recepcionista seleccionado no existe.");
             }
 
-            ticket.Equipo = equipo;
+            // Solo reemplazamos los objetos que NO fueron editados
             ticket.Problema = problema;
             ticket.Recepcionista = recepcionista;
 
             if (ticket.TecnicoAsignado != null)
             {
                 Tecnico tecnico =
-                    _tecnicoRepository.ObtenerPorId(
-                        ticket.TecnicoAsignado.Id
-                    );
+                    _tecnicoRepository.ObtenerPorId(ticket.TecnicoAsignado.Id);
 
                 if (tecnico == null)
                 {
                     throw new InvalidOperationException(
-                        "El técnico seleccionado no existe."
-                    );
+                        "El técnico seleccionado no existe.");
                 }
 
                 ticket.TecnicoAsignado = tecnico;
