@@ -205,9 +205,11 @@
     <Compile Include="Repositorios\TipoEquipoRepository.cs" />
     <Compile Include="Repositorios\UsuarioRepository.cs" />
     <Compile Include="Services\AdministradorService.cs" />
+    <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\EmpleadoService.cs" />
     <Compile Include="Services\EquipoService.cs" />
     <Compile Include="Services\Interfaces\IAdministradorService.cs" />
+    <Compile Include="Services\Interfaces\IClienteService.cs" />
     <Compile Include="Services\Interfaces\IEmpleadoService.cs" />
     <Compile Include="Services\Interfaces\IEquipoService.cs" />
     <Compile Include="Services\Interfaces\IMaterialService.cs" />
@@ -251,6 +253,12 @@
     <Content Include="Database\SQLite\02_DatosInicialesSQLite.sql" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\FrmClientes.resx">
+      <DependentUpon>FrmClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmInventario.resx">
+      <DependentUpon>FrmInventario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>

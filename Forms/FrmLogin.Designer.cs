@@ -47,22 +47,22 @@
             // 
             // picLogo
             // 
-            this.picLogo.Location = new System.Drawing.Point(404, 26);
+            this.picLogo.Location = new System.Drawing.Point(454, 32);
             this.picLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picLogo.Name = "picLogo";
-            this.picLogo.Size = new System.Drawing.Size(71, 64);
+            this.picLogo.Size = new System.Drawing.Size(80, 80);
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picLogo.TabIndex = 8;
             this.picLogo.TabStop = false;
             // 
             // lblTitulo
             // 
-            this.lblTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblTitulo.BackColor = System.Drawing.Color.DimGray;
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Location = new System.Drawing.Point(258, 92);
+            this.lblTitulo.Location = new System.Drawing.Point(290, 115);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(373, 32);
+            this.lblTitulo.Size = new System.Drawing.Size(420, 40);
             this.lblTitulo.TabIndex = 9;
             this.lblTitulo.Text = "TALLER San Francisco";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -72,9 +72,9 @@
             // 
             this.lblSubtitulo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitulo.ForeColor = System.Drawing.Color.White;
-            this.lblSubtitulo.Location = new System.Drawing.Point(258, 124);
+            this.lblSubtitulo.Location = new System.Drawing.Point(290, 155);
             this.lblSubtitulo.Name = "lblSubtitulo";
-            this.lblSubtitulo.Size = new System.Drawing.Size(373, 20);
+            this.lblSubtitulo.Size = new System.Drawing.Size(420, 25);
             this.lblSubtitulo.TabIndex = 10;
             this.lblSubtitulo.Text = "Sistema de Gestión";
             this.lblSubtitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -82,80 +82,78 @@
             // 
             // iconUsuario
             // 
-            this.iconUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.iconUsuario.ForeColor = System.Drawing.Color.Gray;
+            this.iconUsuario.BackColor = System.Drawing.Color.DimGray;
+            this.iconUsuario.ForeColor = System.Drawing.Color.Black;
             this.iconUsuario.IconChar = FontAwesome.Sharp.IconChar.User;
-            this.iconUsuario.IconColor = System.Drawing.Color.Gray;
+            this.iconUsuario.IconColor = System.Drawing.Color.Black;
             this.iconUsuario.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconUsuario.IconSize = 26;
-            this.iconUsuario.Location = new System.Drawing.Point(314, 176);
+            this.iconUsuario.Location = new System.Drawing.Point(353, 220);
             this.iconUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.iconUsuario.Name = "iconUsuario";
-            this.iconUsuario.Size = new System.Drawing.Size(28, 26);
+            this.iconUsuario.Size = new System.Drawing.Size(32, 32);
             this.iconUsuario.TabIndex = 11;
             this.iconUsuario.TabStop = false;
             // 
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblUsuario.BackColor = System.Drawing.Color.DimGray;
             this.lblUsuario.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.Color.White;
-            this.lblUsuario.Location = new System.Drawing.Point(345, 176);
+            this.lblUsuario.Location = new System.Drawing.Point(388, 220);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(68, 23);
+            this.lblUsuario.Size = new System.Drawing.Size(79, 28);
             this.lblUsuario.TabIndex = 12;
             this.lblUsuario.Text = "Usuario";
             this.lblUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtUsuario
             // 
-            this.txtUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtUsuario.BackColor = System.Drawing.Color.DimGray;
             this.txtUsuario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUsuario.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsuario.Location = new System.Drawing.Point(311, 204);
+            this.txtUsuario.Location = new System.Drawing.Point(350, 255);
             this.txtUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(285, 30);
+            this.txtUsuario.Size = new System.Drawing.Size(320, 34);
             this.txtUsuario.TabIndex = 13;
             // 
             // iconPictureBox1
             // 
-            this.iconPictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.iconPictureBox1.ForeColor = System.Drawing.Color.Gray;
+            this.iconPictureBox1.BackColor = System.Drawing.Color.DimGray;
+            this.iconPictureBox1.ForeColor = System.Drawing.Color.Black;
             this.iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.Lock;
-            this.iconPictureBox1.IconColor = System.Drawing.Color.Gray;
+            this.iconPictureBox1.IconColor = System.Drawing.Color.Black;
             this.iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconPictureBox1.IconSize = 26;
-            this.iconPictureBox1.Location = new System.Drawing.Point(311, 252);
+            this.iconPictureBox1.Location = new System.Drawing.Point(350, 315);
             this.iconPictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.iconPictureBox1.Name = "iconPictureBox1";
-            this.iconPictureBox1.Size = new System.Drawing.Size(28, 26);
+            this.iconPictureBox1.Size = new System.Drawing.Size(32, 32);
             this.iconPictureBox1.TabIndex = 14;
             this.iconPictureBox1.TabStop = false;
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblPassword.BackColor = System.Drawing.Color.DimGray;
             this.lblPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassword.ForeColor = System.Drawing.Color.White;
-            this.lblPassword.Location = new System.Drawing.Point(345, 255);
+            this.lblPassword.Location = new System.Drawing.Point(388, 319);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(97, 23);
+            this.lblPassword.Size = new System.Drawing.Size(110, 28);
             this.lblPassword.TabIndex = 15;
             this.lblPassword.Text = "Contraseña";
             this.lblPassword.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtPassword
             // 
-            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtPassword.BackColor = System.Drawing.Color.DimGray;
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(309, 282);
+            this.txtPassword.Location = new System.Drawing.Point(348, 352);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(285, 30);
+            this.txtPassword.Size = new System.Drawing.Size(320, 34);
             this.txtPassword.TabIndex = 16;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
@@ -164,10 +162,10 @@
             this.btnIngresar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.btnIngresar.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnIngresar.ForeColor = System.Drawing.Color.White;
-            this.btnIngresar.Location = new System.Drawing.Point(309, 350);
+            this.btnIngresar.Location = new System.Drawing.Point(348, 438);
             this.btnIngresar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnIngresar.Name = "btnIngresar";
-            this.btnIngresar.Size = new System.Drawing.Size(284, 24);
+            this.btnIngresar.Size = new System.Drawing.Size(320, 30);
             this.btnIngresar.TabIndex = 17;
             this.btnIngresar.Text = "Iniciar sesión";
             this.btnIngresar.UseVisualStyleBackColor = false;
@@ -175,25 +173,24 @@
             // 
             // iconPictureBox2
             // 
-            this.iconPictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.iconPictureBox2.BackColor = System.Drawing.Color.DimGray;
             this.iconPictureBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.iconPictureBox2.IconChar = FontAwesome.Sharp.IconChar.DoorOpen;
             this.iconPictureBox2.IconColor = System.Drawing.SystemColors.ButtonHighlight;
             this.iconPictureBox2.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconPictureBox2.IconSize = 26;
-            this.iconPictureBox2.Location = new System.Drawing.Point(276, 350);
+            this.iconPictureBox2.Location = new System.Drawing.Point(310, 438);
             this.iconPictureBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.iconPictureBox2.Name = "iconPictureBox2";
-            this.iconPictureBox2.Size = new System.Drawing.Size(28, 26);
+            this.iconPictureBox2.Size = new System.Drawing.Size(32, 32);
             this.iconPictureBox2.TabIndex = 18;
             this.iconPictureBox2.TabStop = false;
             // 
             // FrmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(869, 475);
+            this.BackColor = System.Drawing.Color.DimGray;
+            this.ClientSize = new System.Drawing.Size(978, 594);
             this.Controls.Add(this.iconPictureBox2);
             this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.txtPassword);
