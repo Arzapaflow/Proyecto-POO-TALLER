@@ -138,7 +138,28 @@ namespace Proyecto1.Forms
                 MessageBox.Show("Cliente eliminado.");
             }
         }
-        
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            string texto = txtBuscar.Text.Trim().ToLower();
+
+            dgvClientes.Rows.Clear();
+
+            foreach (Cliente cliente in _clienteService.ObtenerTodos())
+            {
+                if (cliente.Nombre.ToLower().Contains(texto) ||
+                    cliente.Telefono.ToLower().Contains(texto) ||
+                    cliente.Correo.ToLower().Contains(texto))
+                {
+                    dgvClientes.Rows.Add(
+                        cliente.Id,
+                        cliente.Nombre,
+                        cliente.Telefono,
+                        cliente.Correo
+                    );
+                }
+            }
+        }
+
 
         private void dgvClientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {

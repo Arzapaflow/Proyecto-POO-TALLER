@@ -16,5 +16,7 @@ namespace Proyecto1.Forms
         {
             InitializeComponent();
         }
+
+        
     }
 }
