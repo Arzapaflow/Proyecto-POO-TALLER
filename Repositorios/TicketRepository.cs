@@ -505,5 +505,123 @@ namespace Proyecto1.Repositorios
                 return lista;
             }
         }
+    
+    public List<Ticket> ObtenerPorTecnico(int idTecnico)
+        {
+            List<Ticket> lista = new List<Ticket>();
+
+            using (SQLiteConnection conexion = ConexionBD.CrearConexion())
+            {
+                string consulta = @"
+SELECT
+    t.IdTicket,
+    t.DescripcionFalla,
+    t.Prioridad,
+    t.FechaIngreso,
+    t.IdEstado,
+
+    p.IdProblema,
+    p.Nombre AS NombreProblema,
+
+    e.IdEquipo,
+    e.Marca,
+    e.Modelo,
+
+    c.IdCliente,
+    c.Nombre AS NombreCliente,
+
+    te.IdTipoEquipo,
+    te.Nombre AS NombreTipoEquipo
+
+FROM Tickets t
+
+INNER JOIN Equipos e
+    ON t.IdEquipo = e.IdEquipo
+
+INNER JOIN Clientes c
+    ON e.IdCliente = c.IdCliente
+
+INNER JOIN TipoEquipos te
+    ON e.IdTipoEquipo = te.IdTipoEquipo
+
+INNER JOIN Problemas p
+    ON t.IdProblema = p.IdProblema
+
+WHERE t.IdTecnico = @IdTecnico
+
+ORDER BY
+    t.FechaIngreso ASC;";
+
+                SQLiteCommand comando =
+                    new SQLiteCommand(consulta, conexion);
+
+                comando.Parameters.AddWithValue(
+                    "@IdTecnico",
+                    idTecnico);
+
+                conexion.Open();
+
+                using (SQLiteDataReader reader = comando.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Ticket ticket = new Ticket();
+
+                        ticket.Id =
+                            Convert.ToInt32(reader["IdTicket"]);
+
+                        ticket.Equipo = new Equipo();
+
+                        ticket.Equipo.Id =
+                            Convert.ToInt32(reader["IdEquipo"]);
+
+                        ticket.Equipo.Marca =
+                            reader["Marca"].ToString();
+
+                        ticket.Equipo.Modelo =
+                            reader["Modelo"].ToString();
+
+                        ticket.Equipo.Cliente = new Cliente();
+
+                        ticket.Equipo.Cliente.Id =
+                            Convert.ToInt32(reader["IdCliente"]);
+
+                        ticket.Equipo.Cliente.Nombre =
+                            reader["NombreCliente"].ToString();
+
+                        ticket.Equipo.TipoEquipo =
+                            new TipoEquipo();
+
+                        ticket.Equipo.TipoEquipo.Id =
+                            Convert.ToInt32(reader["IdTipoEquipo"]);
+
+                        ticket.Equipo.TipoEquipo.Nombre =
+                            reader["NombreTipoEquipo"].ToString();
+
+                        ticket.Problema = new Problema();
+
+                        ticket.Problema.Id =
+                            Convert.ToInt32(reader["IdProblema"]);
+
+                        ticket.Problema.Nombre =
+                            reader["NombreProblema"].ToString();
+
+                        ticket.Prioridad =
+                            reader["Prioridad"].ToString();
+
+                        ticket.FechaIngreso =
+                            Convert.ToDateTime(reader["FechaIngreso"]);
+
+                        ticket.Estado =
+                            ObtenerEstado(
+                                Convert.ToInt32(reader["IdEstado"]));
+
+                        lista.Add(ticket);
+                    }
+                }
+            }
+
+            return lista;
+        }
     }
 }

@@ -161,6 +161,12 @@
     <Compile Include="Forms\FrmTickets.Designer.cs">
       <DependentUpon>FrmTickets.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmTrabajoTecnico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmTrabajoTecnico.Designer.cs">
+      <DependentUpon>FrmTrabajoTecnico.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Administrador.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Empleado.cs" />
@@ -280,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmTickets.resx">
       <DependentUpon>FrmTickets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmTrabajoTecnico.resx">
+      <DependentUpon>FrmTrabajoTecnico.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

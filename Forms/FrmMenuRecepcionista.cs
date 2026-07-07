@@ -29,9 +29,8 @@ namespace Proyecto1.Forms
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
-            AbrirFormulario(new FrmTickets());
+            AbrirFormulario(new FrmTrabajoTecnico());
         }
-
         private void AbrirFormulario(Form formulario)
         {
             pnlContenedor.Controls.Clear();
