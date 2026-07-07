@@ -13,27 +13,90 @@ namespace Proyecto1.Repositorios
         {
             using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"INSERT INTO Equipos
-                                    (IdCliente, IdTipoEquipo, Marca, Modelo,
-                                     NumeroSerie, Color, Accesorios, Observaciones)
-                                    VALUES
-                                    (@IdCliente, @IdTipoEquipo, @Marca, @Modelo,
-                                     @NumeroSerie, @Color, @Accesorios, @Observaciones)";
+                string consulta = @"
+            INSERT INTO Equipos
+            (
+                IdCliente,
+                IdTipoEquipo,
+                Marca,
+                Modelo,
+                Color,
+                NumeroSerie,
+                Accesorios,
+                Observaciones
+            )
+            VALUES
+            (
+                @IdCliente,
+                @IdTipoEquipo,
+                @Marca,
+                @Modelo,
+                @Color,
+                @NumeroSerie,
+                @Accesorios,
+                @Observaciones
+            );
+
+            SELECT last_insert_rowid();";
 
                 SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
 
-                comando.Parameters.AddWithValue("@IdCliente", equipo.Cliente.Id);
-                comando.Parameters.AddWithValue("@IdTipoEquipo", equipo.TipoEquipo.Id);
-                comando.Parameters.AddWithValue("@Marca", equipo.Marca);
-                comando.Parameters.AddWithValue("@Modelo", equipo.Modelo);
-                comando.Parameters.AddWithValue("@NumeroSerie", equipo.NumeroSerie);
-                comando.Parameters.AddWithValue("@Color", equipo.Color);
-                comando.Parameters.AddWithValue("@Accesorios", equipo.Accesorios);
-                comando.Parameters.AddWithValue("@Observaciones", equipo.Observaciones);
+                comando.Parameters.AddWithValue(
+                    "@IdCliente",
+                    equipo.Cliente.Id
+                );
+
+                comando.Parameters.AddWithValue(
+                    "@IdTipoEquipo",
+                    equipo.TipoEquipo.Id
+                );
+
+                comando.Parameters.AddWithValue(
+                    "@Marca",
+                    equipo.Marca
+                );
+
+                comando.Parameters.AddWithValue(
+                    "@Modelo",
+                    equipo.Modelo
+                );
+
+                comando.Parameters.AddWithValue(
+                    "@Color",
+                    equipo.Color
+                );
+
+                comando.Parameters.AddWithValue(
+                    "@NumeroSerie",
+                    string.IsNullOrWhiteSpace(equipo.NumeroSerie)
+                        ? (object)DBNull.Value
+                        : equipo.NumeroSerie
+                );
+
+                comando.Parameters.AddWithValue(
+                    "@Accesorios",
+                    string.IsNullOrWhiteSpace(equipo.Accesorios)
+                        ? (object)DBNull.Value
+                        : equipo.Accesorios
+                );
+
+                comando.Parameters.AddWithValue(
+                    "@Observaciones",
+                    string.IsNullOrWhiteSpace(equipo.Observaciones)
+                        ? (object)DBNull.Value
+                        : equipo.Observaciones
+                );
 
                 conexion.Open();
 
-                return comando.ExecuteNonQuery() > 0;
+                object resultado = comando.ExecuteScalar();
+
+                if (resultado == null || resultado == DBNull.Value)
+                    return false;
+
+                equipo.Id = Convert.ToInt32(resultado);
+
+                return equipo.Id > 0;
             }
         }
 

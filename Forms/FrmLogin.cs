@@ -81,6 +81,8 @@ namespace Proyecto1
 
                 if (usuario != null)
                 {
+                    SesionActual.IniciarSesion(usuario);
+
                     MessageBox.Show(
                         "Inicio de sesión correcto.",
                         "Bienvenido",
