@@ -81,7 +81,7 @@ namespace Proyecto1.Forms
             cmbTipoEquipo.ValueMember = "Id";
             cmbTipoEquipo.SelectedIndex = -1;
         }
-
+        //efs
         private void CargarProblemas()
         {
             List<Problema> problemasActivos = new List<Problema>();
