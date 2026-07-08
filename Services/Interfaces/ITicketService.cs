@@ -22,5 +22,6 @@ namespace Proyecto1.Services.Interfaces
         Ticket ObtenerPorId(int idTicket);
 
         List<Ticket> ObtenerTodos();
+        List<Ticket> ObtenerPorTecnico(int idTecnico);
     }
 }

@@ -429,5 +429,9 @@ namespace Proyecto1.Services
                 ticket.TecnicoAsignado = tecnico;
             }
         }
+        public List<Ticket> ObtenerPorTecnico(int idTecnico)
+        {
+            return _ticketRepository.ObtenerPorTecnico(idTecnico);
+        }
     }
 }

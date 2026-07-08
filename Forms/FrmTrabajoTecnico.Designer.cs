@@ -53,8 +53,7 @@
             this.DgvTickets.RowTemplate.Height = 24;
             this.DgvTickets.Size = new System.Drawing.Size(692, 150);
             this.DgvTickets.TabIndex = 0;
-            this.DgvTickets.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
+            this.DgvTickets.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvTickets_CellClick);            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -71,7 +70,7 @@
             this.txtDiagnostico.Name = "txtDiagnostico";
             this.txtDiagnostico.Size = new System.Drawing.Size(159, 85);
             this.txtDiagnostico.TabIndex = 2;
-            this.txtDiagnostico.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            
             // 
             // solución
             // 
@@ -81,7 +80,7 @@
             this.solución.Size = new System.Drawing.Size(59, 16);
             this.solución.TabIndex = 3;
             this.solución.Text = "Solución";
-            this.solución.Click += new System.EventHandler(this.label2_Click);
+            
             // 
             // txtSolucion
             // 
@@ -148,6 +147,7 @@
             this.btnGuardar.TabIndex = 11;
             this.btnGuardar.Text = "Guardar Cambios";
             this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // label4
             // 
