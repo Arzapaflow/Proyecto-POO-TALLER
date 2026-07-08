@@ -64,6 +64,8 @@
             this.dgvTickets = new System.Windows.Forms.DataGridView();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cmbTecnico = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTickets)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,7 +96,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(324, 498);
+            this.label3.Location = new System.Drawing.Point(329, 531);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(191, 28);
@@ -143,6 +145,7 @@
             this.cmbTipoEquipo.Name = "cmbTipoEquipo";
             this.cmbTipoEquipo.Size = new System.Drawing.Size(224, 36);
             this.cmbTipoEquipo.TabIndex = 6;
+            this.cmbTipoEquipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipoEquipo_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -167,7 +170,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(324, 279);
+            this.label7.Location = new System.Drawing.Point(329, 312);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 28);
@@ -176,7 +179,7 @@
             // 
             // txtModelo
             // 
-            this.txtModelo.Location = new System.Drawing.Point(434, 276);
+            this.txtModelo.Location = new System.Drawing.Point(439, 309);
             this.txtModelo.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txtModelo.Name = "txtModelo";
             this.txtModelo.Size = new System.Drawing.Size(196, 34);
@@ -206,7 +209,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(324, 330);
+            this.label9.Location = new System.Drawing.Point(329, 363);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(148, 28);
@@ -215,7 +218,7 @@
             // 
             // txtNumeroSerie
             // 
-            this.txtNumeroSerie.Location = new System.Drawing.Point(485, 330);
+            this.txtNumeroSerie.Location = new System.Drawing.Point(490, 363);
             this.txtNumeroSerie.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txtNumeroSerie.Name = "txtNumeroSerie";
             this.txtNumeroSerie.Size = new System.Drawing.Size(224, 34);
@@ -225,7 +228,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(328, 377);
+            this.label10.Location = new System.Drawing.Point(333, 410);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(118, 28);
@@ -234,7 +237,7 @@
             // 
             // txtAccesorios
             // 
-            this.txtAccesorios.Location = new System.Drawing.Point(454, 387);
+            this.txtAccesorios.Location = new System.Drawing.Point(459, 420);
             this.txtAccesorios.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txtAccesorios.Multiline = true;
             this.txtAccesorios.Name = "txtAccesorios";
@@ -265,7 +268,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(333, 546);
+            this.label12.Location = new System.Drawing.Point(338, 579);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(107, 28);
@@ -276,7 +279,7 @@
             // 
             this.cmbProblema.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProblema.FormattingEnabled = true;
-            this.cmbProblema.Location = new System.Drawing.Point(450, 543);
+            this.cmbProblema.Location = new System.Drawing.Point(455, 576);
             this.cmbProblema.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.cmbProblema.Name = "cmbProblema";
             this.cmbProblema.Size = new System.Drawing.Size(232, 36);
@@ -307,7 +310,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(333, 605);
+            this.label14.Location = new System.Drawing.Point(338, 638);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(228, 28);
@@ -316,7 +319,7 @@
             // 
             // txtDescripcionFalla
             // 
-            this.txtDescripcionFalla.Location = new System.Drawing.Point(337, 641);
+            this.txtDescripcionFalla.Location = new System.Drawing.Point(342, 674);
             this.txtDescripcionFalla.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.txtDescripcionFalla.Multiline = true;
             this.txtDescripcionFalla.Name = "txtDescripcionFalla";
@@ -449,12 +452,34 @@
             this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(329, 262);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(182, 28);
+            this.label18.TabIndex = 36;
+            this.label18.Text = "Técnico Asignado:";
+            // 
+            // cmbTecnico
+            // 
+            this.cmbTecnico.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTecnico.FormattingEnabled = true;
+            this.cmbTecnico.Location = new System.Drawing.Point(519, 261);
+            this.cmbTecnico.Name = "cmbTecnico";
+            this.cmbTecnico.Size = new System.Drawing.Size(230, 36);
+            this.cmbTecnico.TabIndex = 37;
+            // 
             // FrmTickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1623, 1142);
+            this.Controls.Add(this.cmbTecnico);
+            this.Controls.Add(this.label18);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.dgvTickets);
@@ -540,5 +565,7 @@
         private System.Windows.Forms.DataGridView dgvTickets;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox cmbTecnico;
     }
 }

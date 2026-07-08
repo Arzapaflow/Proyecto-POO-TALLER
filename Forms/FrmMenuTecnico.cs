@@ -64,5 +64,7 @@ namespace Proyecto1.Forms
 
             this.Close();
         }
+
+        
     }
 }

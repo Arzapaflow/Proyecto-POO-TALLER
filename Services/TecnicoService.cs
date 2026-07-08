@@ -1,182 +1,187 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Proyecto1.Models;
+﻿using Proyecto1.Models;
 using Proyecto1.Models.Enums;
 using Proyecto1.Repositorios;
 using Proyecto1.Repositorios.Interfaces;
 using Proyecto1.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Proyecto1.Services
 {
     public class TecnicoService : ITecnicoService
     {
+        private readonly IEmpleadoRepository _empleadoRepository;
         private readonly ITecnicoRepository _tecnicoRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
         public TecnicoService()
         {
+            _empleadoRepository = new EmpleadoRepository();
             _tecnicoRepository = new TecnicoRepository();
+            _usuarioRepository = new UsuarioRepository();
         }
 
-        public TecnicoService(
-            ITecnicoRepository tecnicoRepository)
+        public bool Registrar(Tecnico tecnico, Usuario usuario)
         {
-            if (tecnicoRepository == null)
-            {
-                throw new ArgumentNullException(
-                    nameof(tecnicoRepository)
-                );
-            }
+            if (tecnico == null)
+                throw new Exception("No se recibieron los datos del técnico.");
 
-            _tecnicoRepository = tecnicoRepository;
+            if (usuario == null)
+                throw new Exception("No se recibieron los datos del usuario.");
+
+            if (string.IsNullOrWhiteSpace(tecnico.Nombre))
+                throw new Exception("Ingrese el nombre.");
+
+            if (string.IsNullOrWhiteSpace(tecnico.Telefono))
+                throw new Exception("Ingrese el teléfono.");
+
+            if (string.IsNullOrWhiteSpace(tecnico.Correo))
+                throw new Exception("Ingrese el correo.");
+
+            if (string.IsNullOrWhiteSpace(usuario.NombreUsuario))
+                throw new Exception("Ingrese el nombre de usuario.");
+
+            if (string.IsNullOrWhiteSpace(usuario.Contrasena))
+                throw new Exception("Ingrese la contraseña.");
+
+            if (_usuarioRepository.ObtenerPorNombreUsuario(usuario.NombreUsuario) != null)
+                throw new Exception("Ese nombre de usuario ya existe.");
+
+            if (!_empleadoRepository.Insertar(tecnico))
+                throw new Exception("No se pudo registrar el empleado.");
+
+            if (!_tecnicoRepository.Insertar(tecnico))
+                throw new Exception("No se pudo registrar el técnico.");
+
+            usuario.IdEmpleado = tecnico.Id;
+            usuario.IdRol = 3;
+            usuario.Activo = true;
+
+            if (!_usuarioRepository.Insertar(usuario))
+                throw new Exception("No se pudo crear el usuario.");
+
+            return true;
         }
 
-        public bool Registrar(Tecnico tecnico)
+        public bool Actualizar(Tecnico tecnico, Usuario usuario)
         {
-            ValidarTecnico(tecnico);
+            if (_idVacio(tecnico.Id))
+                throw new Exception("Seleccione un técnico.");
 
-            List<Tecnico> tecnicos =
-                _tecnicoRepository.ObtenerTodos();
+            if (string.IsNullOrWhiteSpace(tecnico.Nombre))
+                throw new Exception("Ingrese el nombre.");
 
-            bool correoRegistrado = tecnicos.Any(
-                t => t.Correo.Equals(
-                    tecnico.Correo,
-                    StringComparison.OrdinalIgnoreCase
-                )
-            );
+            if (string.IsNullOrWhiteSpace(tecnico.Telefono))
+                throw new Exception("Ingrese el teléfono.");
 
-            if (correoRegistrado)
+            if (string.IsNullOrWhiteSpace(tecnico.Correo))
+                throw new Exception("Ingrese el correo.");
+
+            if (string.IsNullOrWhiteSpace(usuario.NombreUsuario))
+                throw new Exception("Ingrese el usuario.");
+
+            if (string.IsNullOrWhiteSpace(usuario.Contrasena))
+                throw new Exception("Ingrese la contraseña.");
+
+            Usuario existente =
+                _usuarioRepository.ObtenerPorNombreUsuario(usuario.NombreUsuario);
+
+            if (existente != null &&
+                existente.IdEmpleado != tecnico.Id)
             {
-                throw new InvalidOperationException(
-                    "Ya existe un técnico registrado con ese correo."
-                );
+                throw new Exception("Ese nombre de usuario ya pertenece a otro empleado.");
             }
 
-            return _tecnicoRepository.Insertar(tecnico);
-        }
+            _empleadoRepository.Actualizar(tecnico);
 
-        public bool Actualizar(Tecnico tecnico)
-        {
-            ValidarTecnico(tecnico);
+            _tecnicoRepository.Actualizar(tecnico);
 
-            if (tecnico.Id <= 0)
+            if (existente != null)
             {
-                throw new ArgumentException(
-                    "El identificador del técnico no es válido."
-                );
+                usuario.IdUsuario = existente.IdUsuario;
+                usuario.IdEmpleado = tecnico.Id;
+                usuario.IdRol = 3;
+                usuario.Activo = true;
+
+                _usuarioRepository.Actualizar(usuario);
             }
 
-            Tecnico tecnicoExistente =
-                _tecnicoRepository.ObtenerPorId(tecnico.Id);
-
-            if (tecnicoExistente == null)
-                return false;
-
-            List<Tecnico> tecnicos =
-                _tecnicoRepository.ObtenerTodos();
-
-            bool correoRegistrado = tecnicos.Any(
-                t => t.Id != tecnico.Id &&
-                     t.Correo.Equals(
-                         tecnico.Correo,
-                         StringComparison.OrdinalIgnoreCase
-                     )
-            );
-
-            if (correoRegistrado)
-            {
-                throw new InvalidOperationException(
-                    "El correo ya pertenece a otro técnico."
-                );
-            }
-
-            return _tecnicoRepository.Actualizar(tecnico);
+            return true;
         }
 
         public bool Eliminar(int idEmpleado)
         {
-            if (idEmpleado <= 0)
+            Usuario usuario = null;
+
+            foreach (Usuario u in _usuarioRepository.ObtenerTodos())
             {
-                throw new ArgumentException(
-                    "El identificador del técnico no es válido."
-                );
+                if (u.IdEmpleado == idEmpleado)
+                {
+                    usuario = u;
+                    break;
+                }
             }
+            if (usuario != null)
+                _usuarioRepository.Eliminar(usuario.IdUsuario);
 
-            Tecnico tecnico =
-                _tecnicoRepository.ObtenerPorId(idEmpleado);
+            _tecnicoRepository.Eliminar(idEmpleado);
 
-            if (tecnico == null)
-                return false;
+            _empleadoRepository.Eliminar(idEmpleado);
 
-            return _tecnicoRepository.Eliminar(idEmpleado);
+            return true;
         }
-
         public Tecnico ObtenerPorId(int idEmpleado)
         {
-            if (idEmpleado <= 0)
-            {
-                throw new ArgumentException(
-                    "El identificador del técnico no es válido."
-                );
-            }
-
             return _tecnicoRepository.ObtenerPorId(idEmpleado);
         }
-
         public List<Tecnico> ObtenerTodos()
         {
             return _tecnicoRepository.ObtenerTodos();
         }
-
-        private void ValidarTecnico(Tecnico tecnico)
+        private bool _idVacio(int id)
         {
-            if (tecnico == null)
-            {
-                throw new ArgumentNullException(
-                    nameof(tecnico)
-                );
-            }
+            return id <= 0;
+        }
+        public List<Tecnico> ObtenerPorEspecialidad(Especialidad especialidad)
+        {
+            return _tecnicoRepository
+                .ObtenerTodos()
+                .Where(t => t.Especialidad == especialidad)
+                .ToList();
+        }
+        public List<Tecnico> ObtenerPorTipoEquipo(TipoEquipo tipoEquipo)
+        {
+            List<Tecnico> tecnicos = ObtenerTodos();
 
-            if (string.IsNullOrWhiteSpace(tecnico.Nombre))
+            switch (tipoEquipo)
             {
-                throw new ArgumentException(
-                    "El nombre del técnico no puede estar vacío."
-                );
-            }
+                case TipoEquipo.Celular:
+                    return tecnicos.Where(t =>
+                        t.Especialidad == Especialidad.AppleMoviles ||
+                        t.Especialidad == Especialidad.AndroidMoviles)
+                        .ToList();
 
-            if (string.IsNullOrWhiteSpace(tecnico.Telefono))
-            {
-                throw new ArgumentException(
-                    "El teléfono del técnico no puede estar vacío."
-                );
-            }
+                case TipoEquipo.Computadora:
+                    return tecnicos.Where(t =>
+                        t.Especialidad == Especialidad.AppleComputadoras ||
+                        t.Especialidad == Especialidad.ComputadorasWindows)
+                        .ToList();
 
-            if (string.IsNullOrWhiteSpace(tecnico.Correo))
-            {
-                throw new ArgumentException(
-                    "El correo del técnico no puede estar vacío."
-                );
-            }
+                case TipoEquipo.Consola:
+                    return tecnicos.Where(t =>
+                        t.Especialidad == Especialidad.PConsolas)
+                        .ToList();
 
-            if (!Enum.IsDefined(
-                typeof(Especialidad),
-                tecnico.Especialidad))
-            {
-                throw new ArgumentException(
-                    "La especialidad seleccionada no es válida."
-                );
-            }
+                case TipoEquipo.Electronica:
+                    return tecnicos.Where(t =>
+                        t.Especialidad == Especialidad.Otros)
+                        .ToList();
 
-            if (tecnico.PagoPorHora < 0)
-            {
-                throw new ArgumentException(
-                    "El pago por hora no puede ser negativo."
-                );
+                default:
+                    return new List<Tecnico>();
             }
-
-            tecnico.Nombre = tecnico.Nombre.Trim();
-            tecnico.Telefono = tecnico.Telefono.Trim();
-            tecnico.Correo = tecnico.Correo.Trim();
         }
     }
+
 }

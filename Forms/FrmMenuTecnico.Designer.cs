@@ -131,6 +131,7 @@
             this.label1.Size = new System.Drawing.Size(316, 54);
             this.label1.TabIndex = 1;
             this.label1.Text = "Área de trabajo";
+            
             // 
             // iconInicio
             // 
@@ -267,8 +268,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1330, 816);
-            this.Controls.Add(this.pnlMenu);
             this.Controls.Add(this.pnlContenedor);
+            this.Controls.Add(this.pnlMenu);
             this.Controls.Add(this.pnlSuperior);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(1347, 861);

@@ -40,8 +40,8 @@
             this.btnCerrarSesion = new FontAwesome.Sharp.IconButton();
             this.btnInventario = new FontAwesome.Sharp.IconButton();
             this.btnTickets = new FontAwesome.Sharp.IconButton();
-            this.btnEquipos = new FontAwesome.Sharp.IconButton();
             this.btnClientes = new FontAwesome.Sharp.IconButton();
+            this.btnTecnicos = new FontAwesome.Sharp.IconButton();
             this.pnlSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
             this.pnlContenedor.SuspendLayout();
@@ -154,7 +154,7 @@
             this.pnlMenu.Controls.Add(this.btnCerrarSesion);
             this.pnlMenu.Controls.Add(this.btnInventario);
             this.pnlMenu.Controls.Add(this.btnTickets);
-            this.pnlMenu.Controls.Add(this.btnEquipos);
+            this.pnlMenu.Controls.Add(this.btnTecnicos);
             this.pnlMenu.Controls.Add(this.btnClientes);
             this.pnlMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlMenu.Location = new System.Drawing.Point(0, 100);
@@ -239,31 +239,6 @@
             this.btnTickets.UseVisualStyleBackColor = false;
             this.btnTickets.Click += new System.EventHandler(this.iconButton2_Click);
             // 
-            // btnEquipos
-            // 
-            this.btnEquipos.BackColor = System.Drawing.Color.DimGray;
-            this.btnEquipos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnEquipos.FlatAppearance.BorderSize = 0;
-            this.btnEquipos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEquipos.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEquipos.ForeColor = System.Drawing.Color.White;
-            this.btnEquipos.IconChar = FontAwesome.Sharp.IconChar.Laptop;
-            this.btnEquipos.IconColor = System.Drawing.Color.Black;
-            this.btnEquipos.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnEquipos.IconSize = 28;
-            this.btnEquipos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEquipos.Location = new System.Drawing.Point(0, 69);
-            this.btnEquipos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnEquipos.Name = "btnEquipos";
-            this.btnEquipos.Padding = new System.Windows.Forms.Padding(17, 0, 0, 0);
-            this.btnEquipos.Size = new System.Drawing.Size(250, 69);
-            this.btnEquipos.TabIndex = 1;
-            this.btnEquipos.Text = "Equipos";
-            this.btnEquipos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEquipos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnEquipos.UseVisualStyleBackColor = false;
-            this.btnEquipos.Click += new System.EventHandler(this.btnEquipos_Click);
-            // 
             // btnClientes
             // 
             this.btnClientes.BackColor = System.Drawing.Color.DimGray;
@@ -288,6 +263,31 @@
             this.btnClientes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClientes.UseVisualStyleBackColor = false;
             this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
+            // 
+            // btnTecnicos
+            // 
+            this.btnTecnicos.BackColor = System.Drawing.Color.DimGray;
+            this.btnTecnicos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTecnicos.FlatAppearance.BorderSize = 0;
+            this.btnTecnicos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTecnicos.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTecnicos.ForeColor = System.Drawing.Color.White;
+            this.btnTecnicos.IconChar = FontAwesome.Sharp.IconChar.Laptop;
+            this.btnTecnicos.IconColor = System.Drawing.Color.Black;
+            this.btnTecnicos.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnTecnicos.IconSize = 28;
+            this.btnTecnicos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTecnicos.Location = new System.Drawing.Point(0, 69);
+            this.btnTecnicos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnTecnicos.Name = "btnTecnicos";
+            this.btnTecnicos.Padding = new System.Windows.Forms.Padding(17, 0, 0, 0);
+            this.btnTecnicos.Size = new System.Drawing.Size(250, 69);
+            this.btnTecnicos.TabIndex = 1;
+            this.btnTecnicos.Text = "Tecnicos";
+            this.btnTecnicos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTecnicos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTecnicos.UseVisualStyleBackColor = false;
+            this.btnTecnicos.Click += new System.EventHandler(this.btnTecnicos_Click);
             // 
             // FrmMenuAdministrador
             // 
@@ -325,10 +325,10 @@
         private FontAwesome.Sharp.IconButton btnCerrarSesion;
         private FontAwesome.Sharp.IconButton btnInventario;
         private FontAwesome.Sharp.IconButton btnTickets;
-        private FontAwesome.Sharp.IconButton btnEquipos;
         private FontAwesome.Sharp.IconPictureBox iconInicio;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private FontAwesome.Sharp.IconButton btnTecnicos;
     }
 }

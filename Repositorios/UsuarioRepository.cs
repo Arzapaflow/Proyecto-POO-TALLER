@@ -120,8 +120,8 @@ namespace Proyecto1.Repositorios
             using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
                 string consulta = @"SELECT *
-                                    FROM Usuarios
-                                    WHERE NombreUsuario = @NombreUsuario";
+                            FROM Usuarios
+                            WHERE NombreUsuario = @NombreUsuario";
 
                 SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
 
@@ -129,18 +129,19 @@ namespace Proyecto1.Repositorios
 
                 conexion.Open();
 
-                SQLiteDataReader reader = comando.ExecuteReader();
-
-                if (reader.Read())
+                using (SQLiteDataReader reader = comando.ExecuteReader())
                 {
-                    usuario = new Usuario();
+                    if (reader.Read())
+                    {
+                        usuario = new Usuario();
 
-                    usuario.IdUsuario = Convert.ToInt32(reader["IdUsuario"]);
-                    usuario.IdEmpleado = Convert.ToInt32(reader["IdEmpleado"]);
-                    usuario.IdRol = Convert.ToInt32(reader["IdRol"]);
-                    usuario.NombreUsuario = reader["NombreUsuario"].ToString();
-                    usuario.Contrasena = reader["Contrasena"].ToString();
-                    usuario.Activo = Convert.ToInt32(reader["Activo"]) == 1;
+                        usuario.IdUsuario = Convert.ToInt32(reader["IdUsuario"]);
+                        usuario.IdEmpleado = Convert.ToInt32(reader["IdEmpleado"]);
+                        usuario.IdRol = Convert.ToInt32(reader["IdRol"]);
+                        usuario.NombreUsuario = reader["NombreUsuario"].ToString();
+                        usuario.Contrasena = reader["Contrasena"].ToString();
+                        usuario.Activo = Convert.ToInt32(reader["Activo"]) == 1;
+                    }
                 }
             }
 
@@ -160,9 +161,9 @@ namespace Proyecto1.Repositorios
 
                 conexion.Open();
 
-                SQLiteDataReader reader = comando.ExecuteReader();
-
-                while (reader.Read())
+                using (SQLiteDataReader reader = comando.ExecuteReader()) 
+                {
+                    while (reader.Read())
                 {
                     Usuario usuario = new Usuario();
 
@@ -175,6 +176,8 @@ namespace Proyecto1.Repositorios
 
                     lista.Add(usuario);
                 }
+                }
+                
             }
 
             return lista;

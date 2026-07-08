@@ -51,10 +51,7 @@ namespace Proyecto1.Forms
             AbrirFormulario(new FrmClientes());
         }
 
-        private void btnEquipos_Click(object sender, EventArgs e)
-        {
-            AbrirFormulario(new FrmEquipos());
-        }
+        
 
         private void btnInventario_Click(object sender, EventArgs e)
         {
@@ -68,6 +65,12 @@ namespace Proyecto1.Forms
             login.Show();
 
             this.Close();
+        }
+
+        private void btnTecnicos_Click(object sender, EventArgs e)
+        {
+            FrmTecnicos frm = new FrmTecnicos();
+            frm.ShowDialog();
         }
     }
 }

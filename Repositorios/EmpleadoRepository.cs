@@ -17,22 +17,64 @@ namespace Proyecto1.Repositorios
         {
             using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"INSERT INTO Empleados
-                                    (Nombre, Telefono, Correo, Estado, FechaIngreso)
-                                    VALUES
-                                    (@Nombre, @Telefono, @Correo, @Estado, @FechaIngreso)";
+                string consulta = @"
+        INSERT INTO Empleados
+        (
+            Nombre,
+            Telefono,
+            Correo,
+            Estado,
+            FechaIngreso
+        )
+        VALUES
+        (
+            @Nombre,
+            @Telefono,
+            @Correo,
+            @Estado,
+            @FechaIngreso
+        );
 
-                SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
+        SELECT last_insert_rowid();";
 
-                comando.Parameters.AddWithValue("@Nombre", empleado.Nombre);
-                comando.Parameters.AddWithValue("@Telefono", empleado.Telefono);
-                comando.Parameters.AddWithValue("@Correo", empleado.Correo);
-                comando.Parameters.AddWithValue("@Estado", empleado.Estado.ToString());
-                comando.Parameters.AddWithValue("@FechaIngreso", empleado.FechaIngreso);
+                SQLiteCommand comando =
+                    new SQLiteCommand(consulta, conexion);
+
+                comando.Parameters.AddWithValue(
+                    "@Nombre",
+                    empleado.Nombre);
+
+                comando.Parameters.AddWithValue(
+                    "@Telefono",
+                    empleado.Telefono);
+
+                comando.Parameters.AddWithValue(
+                    "@Correo",
+                    empleado.Correo);
+
+                comando.Parameters.AddWithValue(
+                    "@Estado",
+                    empleado.Estado.ToString());
+
+                comando.Parameters.AddWithValue(
+                    "@FechaIngreso",
+                    empleado.FechaIngreso);
 
                 conexion.Open();
 
-                return comando.ExecuteNonQuery() > 0;
+                object resultado =
+                    comando.ExecuteScalar();
+
+                if (resultado == null ||
+                    resultado == DBNull.Value)
+                {
+                    return false;
+                }
+
+                empleado.Id =
+                    Convert.ToInt32(resultado);
+
+                return empleado.Id > 0;
             }
         }
 

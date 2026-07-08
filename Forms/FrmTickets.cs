@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Proyecto1.Models;
+﻿using Proyecto1.Models;
+using Proyecto1.Models.Enums;
 using Proyecto1.Repositorios;
 using Proyecto1.Repositorios.Interfaces;
 using Proyecto1.Services;
 using Proyecto1.Services.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Proyecto1.Forms
 {
@@ -24,6 +25,10 @@ namespace Proyecto1.Forms
         private readonly ITicketService _ticketService;
         private readonly IRecepcionistaRepository _recepcionistaRepository;
         private int _idTicketSeleccionado = 0;
+        private readonly ITecnicoService _tecnicoService;
+        private readonly ITecnicoService _tecnicoService =
+    new TecnicoService();
+
         public FrmTickets()
         {
             InitializeComponent();
@@ -45,6 +50,7 @@ namespace Proyecto1.Forms
             _equipoRepository = new EquipoRepository();
             _ticketService = new TicketService();
             _recepcionistaRepository = new RecepcionistaRepository();
+            _tecnicoService = new TecnicoService();
 
             cmbProblema.SelectedIndexChanged += cmbProblema_SelectedIndexChanged;
 
@@ -611,6 +617,32 @@ namespace Proyecto1.Forms
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private void CargarTecnicos(Especialidad especialidad)
+        {
+            cmbTecnico.DataSource = null;
+
+            List<Tecnico> lista =
+                _tecnicoService.ObtenerPorEspecialidad(especialidad);
+
+            cmbTecnico.DisplayMember = "Nombre";
+            cmbTecnico.ValueMember = "Id";
+            cmbTecnico.DataSource = lista;
+        }
+
+        private void cmbTipoEquipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbTipoEquipo.SelectedItem == null)
+                return;
+
+            TipoEquipo tipo =
+                (TipoEquipo)cmbTipoEquipo.SelectedItem;
+
+            cmbTecnico.DataSource =
+                _tecnicoService.ObtenerPorTipoEquipo(tipo);
+
+            cmbTecnico.DisplayMember = "Nombre";
+            cmbTecnico.ValueMember = "Id";
         }
     }
 

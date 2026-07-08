@@ -113,26 +113,74 @@ namespace Proyecto1.Repositorios
 
             using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"SELECT *
-                                    FROM Tecnicos
-                                    WHERE IdEmpleado = @IdEmpleado";
+                string consulta = @"
+                                    SELECT
+                                    e.IdEmpleado,
+                                    e.Nombre,
+                                    e.Telefono,
+                                    e.Correo,
+                                    e.Estado,
+                                    e.FechaIngreso,
 
-                SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
+                                    u.NombreUsuario,
 
-                comando.Parameters.AddWithValue("@IdEmpleado", idEmpleado);
+                                    t.IdEspecialidad
+
+                                    FROM Tecnicos t
+
+                                    INNER JOIN Empleados e
+                                    ON t.IdEmpleado=e.IdEmpleado
+
+                                    INNER JOIN Usuarios u
+                                    ON u.IdEmpleado=e.IdEmpleado
+
+                                    WHERE e.IdEmpleado=@IdEmpleado;";
+
+                SQLiteCommand comando =
+                    new SQLiteCommand(consulta, conexion);
+
+                comando.Parameters.AddWithValue(
+                    "@IdEmpleado",
+                    idEmpleado);
 
                 conexion.Open();
 
-                SQLiteDataReader reader = comando.ExecuteReader();
+                using (SQLiteDataReader reader =
+                    comando.ExecuteReader())
+                { 
+                    if (reader.Read())
+                    {
+                        tecnico = new Tecnico();
 
-                if (reader.Read())
-                {
-                    tecnico = new Tecnico();
+                        tecnico.Id =
+                            Convert.ToInt32(reader["IdEmpleado"]);
 
-                    tecnico.Id = Convert.ToInt32(reader["IdEmpleado"]);
-                    tecnico.Especialidad = ObtenerEspecialidad(Convert.ToInt32(reader["IdEspecialidad"]));
-                    tecnico.PagoPorHora = Convert.ToDecimal(reader["PagoPorHora"]);
+                        tecnico.Nombre =
+                            reader["Nombre"].ToString();
+
+                        tecnico.Telefono =
+                            reader["Telefono"].ToString();
+
+                        tecnico.Correo =
+                            reader["Correo"].ToString();
+
+                        tecnico.Usuario =
+                            reader["NombreUsuario"].ToString();
+
+                        tecnico.Estado =
+                            (EstadoEmpleado)Enum.Parse(
+                                typeof(EstadoEmpleado),
+                                reader["Estado"].ToString());
+
+                        tecnico.FechaIngreso =
+                            Convert.ToDateTime(reader["FechaIngreso"]);
+
+                        tecnico.Especialidad =
+                            ObtenerEspecialidad(
+                                Convert.ToInt32(reader["IdEspecialidad"]));
+                    }
                 }
+                    
             }
 
             return tecnico;
@@ -144,25 +192,71 @@ namespace Proyecto1.Repositorios
 
             using (SQLiteConnection conexion = ConexionBD.CrearConexion())
             {
-                string consulta = @"SELECT *
-                                    FROM Tecnicos";
+                string consulta = @"
+                                    SELECT
+                                    e.IdEmpleado,
+                                    e.Nombre,
+                                    e.Telefono,
+                                    e.Correo,
+                                    e.Estado,
+                                    e.FechaIngreso,
 
-                SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
+                                    u.NombreUsuario,
+
+                                    t.IdEspecialidad
+    
+                                    FROM Tecnicos t
+
+                                    INNER JOIN Empleados e
+                                    ON t.IdEmpleado=e.IdEmpleado
+
+                                    INNER JOIN Usuarios u
+                                    ON u.IdEmpleado=e.IdEmpleado
+
+                                    ORDER BY e.Nombre;";
+
+                SQLiteCommand comando =
+                    new SQLiteCommand(consulta, conexion);
 
                 conexion.Open();
 
-                SQLiteDataReader reader = comando.ExecuteReader();
-
-                while (reader.Read())
+                using (SQLiteDataReader reader = comando.ExecuteReader())
                 {
-                    Tecnico tecnico = new Tecnico();
+                    while (reader.Read())
+                    {
+                        Tecnico tecnico = new Tecnico();
 
-                    tecnico.Id = Convert.ToInt32(reader["IdEmpleado"]);
-                    tecnico.Especialidad = ObtenerEspecialidad(Convert.ToInt32(reader["IdEspecialidad"]));
-                    tecnico.PagoPorHora = Convert.ToDecimal(reader["PagoPorHora"]);
+                        tecnico.Id =
+                            Convert.ToInt32(reader["IdEmpleado"]);
 
-                    lista.Add(tecnico);
+                        tecnico.Nombre =
+                            reader["Nombre"].ToString();
+
+                        tecnico.Telefono =
+                            reader["Telefono"].ToString();
+
+                        tecnico.Correo =
+                            reader["Correo"].ToString();
+
+                        tecnico.Usuario =
+                            reader["NombreUsuario"].ToString();
+
+                        tecnico.Estado =
+                            (EstadoEmpleado)Enum.Parse(
+                                typeof(EstadoEmpleado),
+                                reader["Estado"].ToString());
+
+                        tecnico.FechaIngreso =
+                            Convert.ToDateTime(reader["FechaIngreso"]);
+
+                        tecnico.Especialidad =
+                            ObtenerEspecialidad(
+                                Convert.ToInt32(reader["IdEspecialidad"]));
+
+                        lista.Add(tecnico);
+                    }
                 }
+                    
             }
 
             return lista;
