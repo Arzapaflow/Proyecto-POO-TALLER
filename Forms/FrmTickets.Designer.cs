@@ -145,7 +145,7 @@
             this.cmbTipoEquipo.Name = "cmbTipoEquipo";
             this.cmbTipoEquipo.Size = new System.Drawing.Size(224, 36);
             this.cmbTipoEquipo.TabIndex = 6;
-            this.cmbTipoEquipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipoEquipo_SelectedIndexChanged);
+            
             // 
             // label6
             // 

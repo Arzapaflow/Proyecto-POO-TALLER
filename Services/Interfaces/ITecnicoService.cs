@@ -16,6 +16,6 @@ namespace Proyecto1.Services.Interfaces
 
         List<Tecnico> ObtenerTodos();
         List<Tecnico> ObtenerPorEspecialidad(Especialidad especialidad);
-        List<Tecnico> ObtenerPorTipoEquipo(TipoEquipo tipoEquipo);
+        
     }
 }

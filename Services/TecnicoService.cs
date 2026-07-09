@@ -150,38 +150,8 @@ namespace Proyecto1.Services
                 .Where(t => t.Especialidad == especialidad)
                 .ToList();
         }
-        public List<Tecnico> ObtenerPorTipoEquipo(TipoEquipo tipoEquipo)
-        {
-            List<Tecnico> tecnicos = ObtenerTodos();
-
-            switch (tipoEquipo)
-            {
-                case TipoEquipo.Celular:
-                    return tecnicos.Where(t =>
-                        t.Especialidad == Especialidad.AppleMoviles ||
-                        t.Especialidad == Especialidad.AndroidMoviles)
-                        .ToList();
-
-                case TipoEquipo.Computadora:
-                    return tecnicos.Where(t =>
-                        t.Especialidad == Especialidad.AppleComputadoras ||
-                        t.Especialidad == Especialidad.ComputadorasWindows)
-                        .ToList();
-
-                case TipoEquipo.Consola:
-                    return tecnicos.Where(t =>
-                        t.Especialidad == Especialidad.PConsolas)
-                        .ToList();
-
-                case TipoEquipo.Electronica:
-                    return tecnicos.Where(t =>
-                        t.Especialidad == Especialidad.Otros)
-                        .ToList();
-
-                default:
-                    return new List<Tecnico>();
-            }
-        }
+        
+        
     }
 
 }

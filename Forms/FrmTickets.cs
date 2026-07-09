@@ -25,7 +25,7 @@ namespace Proyecto1.Forms
         private readonly ITicketService _ticketService;
         private readonly IRecepcionistaRepository _recepcionistaRepository;
         private int _idTicketSeleccionado = 0;
-        private readonly ITecnicoService _tecnicoService;
+    
         private readonly ITecnicoService _tecnicoService =
     new TecnicoService();
 
@@ -630,20 +630,7 @@ namespace Proyecto1.Forms
             cmbTecnico.DataSource = lista;
         }
 
-        private void cmbTipoEquipo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbTipoEquipo.SelectedItem == null)
-                return;
-
-            TipoEquipo tipo =
-                (TipoEquipo)cmbTipoEquipo.SelectedItem;
-
-            cmbTecnico.DataSource =
-                _tecnicoService.ObtenerPorTipoEquipo(tipo);
-
-            cmbTecnico.DisplayMember = "Nombre";
-            cmbTecnico.ValueMember = "Id";
-        }
+        
     }
 
 }
