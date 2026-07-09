@@ -27,11 +27,13 @@ namespace Proyecto1.Forms
 
         }
 
-        private void iconButton2_Click(object sender, EventArgs e)
+        private void btnTickets_Click(object sender, EventArgs e)
         {
-            AbrirFormulario(new FrmTickets());
-        }
+            FrmTrabajoTecnico frm = new FrmTrabajoTecnico();
 
+            frm.ShowDialog();
+        }
+        
         private void AbrirFormulario(Form formulario)
         {
             pnlContenedor.Controls.Clear();

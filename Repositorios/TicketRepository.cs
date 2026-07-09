@@ -272,12 +272,17 @@ namespace Proyecto1.Repositorios
             te.Nombre AS NombreTipoEquipo,
 
             p.Nombre AS NombreProblema,
+           
             p.Descripcion,
             p.PosiblesCausas,
             p.CostoEstimado,
-            p.Activo
+            p.Activo,
+            emp.Nombre AS NombreTecnico
 
         FROM Tickets t
+        
+        LEFT JOIN Empleados emp
+            ON emp.IdEmpleado = t.IdTecnico
 
         INNER JOIN Equipos e
             ON t.IdEquipo = e.IdEquipo
@@ -376,6 +381,9 @@ namespace Proyecto1.Repositorios
 
                             ticket.TecnicoAsignado.Id =
                                 Convert.ToInt32(reader["IdTecnico"]);
+
+                            ticket.TecnicoAsignado.Nombre =
+                                reader["NombreTecnico"].ToString();
                         }
 
                         ticket.Estado =
@@ -439,6 +447,7 @@ namespace Proyecto1.Repositorios
 
                                     p.IdProblema,
                                     p.Nombre AS NombreProblema,
+                                    emp.Nombre AS NombreTecnico,
 
                                     e.IdEquipo,
                                     e.Marca,
@@ -463,6 +472,9 @@ namespace Proyecto1.Repositorios
 
                                     INNER JOIN Problemas p
                                         ON t.IdProblema = p.IdProblema
+                                    
+                                    LEFT JOIN Empleados emp
+                                        ON t.IdTecnico = emp.IdEmpleado
 
                                     ORDER BY t.IdTicket DESC;";
 
@@ -494,6 +506,13 @@ namespace Proyecto1.Repositorios
                     ticket.Problema = new Problema();
                     ticket.Problema.Id = Convert.ToInt32(reader["IdProblema"]);
                     ticket.Problema.Nombre = reader["NombreProblema"].ToString();
+                    if (reader["NombreTecnico"] != DBNull.Value)
+                    {
+                        ticket.TecnicoAsignado = new Tecnico();
+
+                        ticket.TecnicoAsignado.Nombre =
+                            reader["NombreTecnico"].ToString();
+                    }
 
                     ticket.Prioridad = reader["Prioridad"].ToString();
                     ticket.FechaIngreso = Convert.ToDateTime(reader["FechaIngreso"]);

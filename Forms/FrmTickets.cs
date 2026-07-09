@@ -25,9 +25,7 @@ namespace Proyecto1.Forms
         private readonly ITicketService _ticketService;
         private readonly IRecepcionistaRepository _recepcionistaRepository;
         private int _idTicketSeleccionado = 0;
-    
-        private readonly ITecnicoService _tecnicoService =
-    new TecnicoService();
+        private readonly ITecnicoService _tecnicoService = new TecnicoService();
 
         public FrmTickets()
         {
@@ -39,6 +37,7 @@ namespace Proyecto1.Forms
             dgvTickets.Columns.Add("Cliente", "Cliente");
             dgvTickets.Columns.Add("Equipo", "Equipo");
             dgvTickets.Columns.Add("Problema", "Problema");
+            dgvTickets.Columns.Add("Tecnico", "Técnico");
             dgvTickets.Columns.Add("Prioridad", "Prioridad");
             dgvTickets.Columns.Add("Estado", "Estado");
             dgvTickets.Columns.Add("Fecha", "Fecha");
@@ -60,6 +59,9 @@ namespace Proyecto1.Forms
             CargarPrioridades();
 
             LimpiarFormulario();
+
+            btnEditar.Enabled = false;
+            btnEliminar.Enabled = false;
         }
         private void CargarClientes()
         {
@@ -69,6 +71,18 @@ namespace Proyecto1.Forms
             cmbCliente.DisplayMember = "Nombre";
             cmbCliente.ValueMember = "Id";
             cmbCliente.SelectedIndex = -1;
+        }
+        private void CargarTecnicos()
+        {
+            var lista = _tecnicoService.ObtenerTodos();
+
+            cmbTecnico.DataSource = null;
+            cmbTecnico.DataSource = lista;
+
+            cmbTecnico.DisplayMember = "Nombre";
+            cmbTecnico.ValueMember = "Id";
+
+            cmbTecnico.SelectedIndex = -1;
         }
 
         private void CargarTiposEquipo()
@@ -118,12 +132,14 @@ namespace Proyecto1.Forms
         {
             Problema problemaSeleccionado =
                 cmbProblema.SelectedItem as Problema;
+            
 
             if (problemaSeleccionado == null)
             {
                 txtCostoEstimado.Clear();
                 return;
             }
+           
 
             txtCostoEstimado.Text =
                 problemaSeleccionado.CostoEstimado.ToString("0.00");
@@ -134,6 +150,7 @@ namespace Proyecto1.Forms
             cmbCliente.SelectedIndex = -1;
             cmbTipoEquipo.SelectedIndex = -1;
             cmbProblema.SelectedIndex = -1;
+            cmbTecnico.SelectedIndex = -1;
             cmbPrioridad.SelectedItem = "Normal";
 
             txtMarca.Clear();
@@ -150,6 +167,15 @@ namespace Proyecto1.Forms
             txtBuscar.Clear();
 
             cmbCliente.Focus();
+
+            _idTicketSeleccionado = 0;
+
+            cmbTecnico.SelectedIndex = -1;
+
+            dgvTickets.ClearSelection();
+
+            btnEditar.Enabled = false;
+            btnEliminar.Enabled = false;
         }
 
         private Recepcionista ObtenerRecepcionistaActual()
@@ -228,6 +254,9 @@ namespace Proyecto1.Forms
                 Problema problemaSeleccionado =
                     cmbProblema.SelectedItem as Problema;
 
+                Tecnico tecnicoSeleccionado = 
+                    cmbTecnico.SelectedItem as Tecnico;
+
                 if (clienteSeleccionado == null)
                 {
                     MessageBox.Show(
@@ -264,6 +293,17 @@ namespace Proyecto1.Forms
                     );
 
                     cmbProblema.Focus();
+                    return;
+                }
+                if (tecnicoSeleccionado == null)
+                {
+                    MessageBox.Show(
+                        "Seleccione un técnico.",
+                        "Datos incompletos",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    cmbTecnico.Focus();
                     return;
                 }
 
@@ -354,6 +394,7 @@ namespace Proyecto1.Forms
                 ticket.Equipo = equipoRegistrado;
                 ticket.Problema = problemaSeleccionado;
                 ticket.Recepcionista = recepcionista;
+                ticket.TecnicoAsignado = tecnicoSeleccionado;
 
                 ticket.DescripcionFalla =
                     txtDescripcionFalla.Text.Trim();
@@ -397,6 +438,7 @@ namespace Proyecto1.Forms
                 CargarTickets();
 
                 LimpiarFormulario();
+                _idTicketSeleccionado = 0;
             }
             catch (Exception ex)
             {
@@ -433,8 +475,8 @@ namespace Proyecto1.Forms
             CargarClientes();
             CargarTiposEquipo();
             CargarProblemas();
-
             CargarTickets();
+            CargarTecnicos();
         }
         private void CargarTickets()
         {
@@ -447,8 +489,11 @@ namespace Proyecto1.Forms
                     ticket.Equipo.Cliente.Nombre,
                     ticket.Equipo.TipoEquipo.Nombre + " - " +
                     ticket.Equipo.Marca + " " +
-                    ticket.Equipo.Modelo,
-                    ticket.Problema.Nombre,
+                          ticket.Equipo.Modelo,
+                          ticket.Problema.Nombre,
+                          ticket.TecnicoAsignado != null
+                                ? ticket.TecnicoAsignado.Nombre
+                                    : "Sin asignar",
                     ticket.Prioridad,
                     ticket.Estado.ToString(),
                     ticket.FechaIngreso.ToShortDateString()
@@ -468,6 +513,8 @@ namespace Proyecto1.Forms
 
             if (ticket == null)
                 return;
+            btnEditar.Enabled = true;
+            btnEliminar.Enabled = true;
 
             cmbCliente.SelectedValue =
                 ticket.Equipo.Cliente.Id;
@@ -477,6 +524,15 @@ namespace Proyecto1.Forms
 
             cmbProblema.SelectedValue =
                 ticket.Problema.Id;
+            if (ticket.TecnicoAsignado != null)
+            {
+                cmbTecnico.SelectedValue =
+                    ticket.TecnicoAsignado.Id;
+            }
+            else
+            {
+                cmbTecnico.SelectedIndex = -1;
+            }
 
             txtMarca.Text =
                 ticket.Equipo.Marca;
@@ -527,6 +583,14 @@ namespace Proyecto1.Forms
                     MessageBox.Show("El ticket ya no existe.");
                     return;
                 }
+                DialogResult respuesta = MessageBox.Show(
+                    "¿Desea guardar los cambios realizados al ticket?",
+                    "Confirmar edición",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (respuesta != DialogResult.Yes)
+                    return;
 
                 ticket.Problema.Id =
                     Convert.ToInt32(cmbProblema.SelectedValue);
@@ -542,6 +606,7 @@ namespace Proyecto1.Forms
 
                 ticket.CostoEstimado =
                     decimal.Parse(txtCostoEstimado.Text);
+                ticket.TecnicoAsignado = (Tecnico)cmbTecnico.SelectedItem;
                 ticket.Equipo.Cliente = (Cliente)cmbCliente.SelectedItem;
                 ticket.Equipo.TipoEquipo = (TipoEquipo)cmbTipoEquipo.SelectedItem;
                 ticket.Equipo.Marca = txtMarca.Text.Trim();
@@ -550,7 +615,7 @@ namespace Proyecto1.Forms
                 ticket.Equipo.NumeroSerie = txtNumeroSerie.Text.Trim();
                 ticket.Equipo.Accesorios = txtAccesorios.Text.Trim();
                 ticket.Equipo.Observaciones = txtObservacionesEquipo.Text.Trim();
-
+                
                 bool actualizado =
                     _ticketService.Actualizar(ticket);
 
@@ -562,6 +627,7 @@ namespace Proyecto1.Forms
                     CargarTickets();
 
                     LimpiarFormulario();
+                    _idTicketSeleccionado = 0;
                 }
                 else
                 {
@@ -618,17 +684,7 @@ namespace Proyecto1.Forms
                 MessageBox.Show(ex.Message);
             }
         }
-        private void CargarTecnicos(Especialidad especialidad)
-        {
-            cmbTecnico.DataSource = null;
-
-            List<Tecnico> lista =
-                _tecnicoService.ObtenerPorEspecialidad(especialidad);
-
-            cmbTecnico.DisplayMember = "Nombre";
-            cmbTecnico.ValueMember = "Id";
-            cmbTecnico.DataSource = lista;
-        }
+        
 
         
     }

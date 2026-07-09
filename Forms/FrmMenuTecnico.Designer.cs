@@ -39,8 +39,6 @@
             this.pnlMenu = new System.Windows.Forms.Panel();
             this.btnCerrarSesion = new FontAwesome.Sharp.IconButton();
             this.btnTickets = new FontAwesome.Sharp.IconButton();
-            this.btnEquipos = new FontAwesome.Sharp.IconButton();
-            this.btnClientes = new FontAwesome.Sharp.IconButton();
             this.pnlSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
             this.pnlContenedor.SuspendLayout();
@@ -104,10 +102,10 @@
             this.pnlContenedor.Controls.Add(this.label1);
             this.pnlContenedor.Controls.Add(this.iconInicio);
             this.pnlContenedor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContenedor.Location = new System.Drawing.Point(0, 100);
+            this.pnlContenedor.Location = new System.Drawing.Point(248, 100);
             this.pnlContenedor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pnlContenedor.Name = "pnlContenedor";
-            this.pnlContenedor.Size = new System.Drawing.Size(1330, 716);
+            this.pnlContenedor.Size = new System.Drawing.Size(1082, 716);
             this.pnlContenedor.TabIndex = 1;
             // 
             // label2
@@ -131,7 +129,6 @@
             this.label1.Size = new System.Drawing.Size(316, 54);
             this.label1.TabIndex = 1;
             this.label1.Text = "Área de trabajo";
-            
             // 
             // iconInicio
             // 
@@ -153,8 +150,6 @@
             this.pnlMenu.BackColor = System.Drawing.Color.DimGray;
             this.pnlMenu.Controls.Add(this.btnCerrarSesion);
             this.pnlMenu.Controls.Add(this.btnTickets);
-            this.pnlMenu.Controls.Add(this.btnEquipos);
-            this.pnlMenu.Controls.Add(this.btnClientes);
             this.pnlMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlMenu.Location = new System.Drawing.Point(0, 100);
             this.pnlMenu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -176,7 +171,7 @@
             this.btnCerrarSesion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnCerrarSesion.IconSize = 28;
             this.btnCerrarSesion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(0, 207);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(0, 69);
             this.btnCerrarSesion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
             this.btnCerrarSesion.Padding = new System.Windows.Forms.Padding(17, 0, 0, 0);
@@ -201,7 +196,7 @@
             this.btnTickets.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnTickets.IconSize = 28;
             this.btnTickets.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTickets.Location = new System.Drawing.Point(0, 138);
+            this.btnTickets.Location = new System.Drawing.Point(0, 0);
             this.btnTickets.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnTickets.Name = "btnTickets";
             this.btnTickets.Padding = new System.Windows.Forms.Padding(17, 0, 0, 0);
@@ -211,57 +206,7 @@
             this.btnTickets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTickets.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTickets.UseVisualStyleBackColor = false;
-            this.btnTickets.Click += new System.EventHandler(this.iconButton2_Click);
-            // 
-            // btnEquipos
-            // 
-            this.btnEquipos.BackColor = System.Drawing.Color.DimGray;
-            this.btnEquipos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnEquipos.FlatAppearance.BorderSize = 0;
-            this.btnEquipos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEquipos.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEquipos.ForeColor = System.Drawing.Color.White;
-            this.btnEquipos.IconChar = FontAwesome.Sharp.IconChar.Laptop;
-            this.btnEquipos.IconColor = System.Drawing.Color.Black;
-            this.btnEquipos.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnEquipos.IconSize = 28;
-            this.btnEquipos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEquipos.Location = new System.Drawing.Point(0, 69);
-            this.btnEquipos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnEquipos.Name = "btnEquipos";
-            this.btnEquipos.Padding = new System.Windows.Forms.Padding(17, 0, 0, 0);
-            this.btnEquipos.Size = new System.Drawing.Size(248, 69);
-            this.btnEquipos.TabIndex = 1;
-            this.btnEquipos.Text = "Equipos";
-            this.btnEquipos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEquipos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnEquipos.UseVisualStyleBackColor = false;
-            this.btnEquipos.Click += new System.EventHandler(this.btnEquipos_Click);
-            // 
-            // btnClientes
-            // 
-            this.btnClientes.BackColor = System.Drawing.Color.DimGray;
-            this.btnClientes.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnClientes.FlatAppearance.BorderSize = 0;
-            this.btnClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClientes.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClientes.ForeColor = System.Drawing.Color.White;
-            this.btnClientes.IconChar = FontAwesome.Sharp.IconChar.Users;
-            this.btnClientes.IconColor = System.Drawing.Color.Black;
-            this.btnClientes.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnClientes.IconSize = 28;
-            this.btnClientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClientes.Location = new System.Drawing.Point(0, 0);
-            this.btnClientes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnClientes.Name = "btnClientes";
-            this.btnClientes.Padding = new System.Windows.Forms.Padding(17, 0, 0, 0);
-            this.btnClientes.Size = new System.Drawing.Size(248, 69);
-            this.btnClientes.TabIndex = 0;
-            this.btnClientes.Text = " Clientes";
-            this.btnClientes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClientes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnClientes.UseVisualStyleBackColor = false;
-            this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
+            this.btnTickets.Click += new System.EventHandler(this.btnTickets_Click);
             // 
             // FrmMenuTecnico
             // 
@@ -295,10 +240,8 @@
         private System.Windows.Forms.Panel pnlMenu;
         private System.Windows.Forms.Label lblSubtitulo;
         private System.Windows.Forms.Label lblTitulo;
-        private FontAwesome.Sharp.IconButton btnClientes;
         private FontAwesome.Sharp.IconButton btnCerrarSesion;
         private FontAwesome.Sharp.IconButton btnTickets;
-        private FontAwesome.Sharp.IconButton btnEquipos;
         private FontAwesome.Sharp.IconPictureBox iconInicio;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
         private System.Windows.Forms.Label label2;
