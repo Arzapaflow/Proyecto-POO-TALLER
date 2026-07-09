@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Proyecto1.Models;
 
 namespace Proyecto1.Forms
 {
@@ -15,21 +9,8 @@ namespace Proyecto1.Forms
         public FrmMenuAdministrador()
         {
             InitializeComponent();
-        }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void iconButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void iconButton2_Click(object sender, EventArgs e)
-        {
-            AbrirFormulario(new FrmTickets());
+            AbrirFormulario(new FrmDashboardAdministrador());
         }
 
         private void AbrirFormulario(Form formulario)
@@ -51,11 +32,19 @@ namespace Proyecto1.Forms
             AbrirFormulario(new FrmClientes());
         }
 
-        
+        private void iconButton2_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(new FrmTickets());
+        }
 
         private void btnInventario_Click(object sender, EventArgs e)
         {
             AbrirFormulario(new FrmInventario());
+        }
+
+        private void btnTecnicos_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(new FrmTecnicos());
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
@@ -64,13 +53,34 @@ namespace Proyecto1.Forms
 
             login.Show();
 
-            this.Close();
+            Close();
         }
 
-        private void btnTecnicos_Click(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
-            FrmTecnicos frm = new FrmTecnicos();
-            frm.ShowDialog();
+
+        }
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private decimal CalcularPagoTecnico(decimal costo)
+        {
+            return costo *
+                   ConfiguracionTaller.PorcentajePagoTecnico;
+        }
+
+        private decimal CalcularUtilidad(decimal costo)
+        {
+            return costo -
+                   CalcularPagoTecnico(costo);
+        }
+
+        private void btnInicio_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario(new FrmDashboardAdministrador());
         }
     }
 }

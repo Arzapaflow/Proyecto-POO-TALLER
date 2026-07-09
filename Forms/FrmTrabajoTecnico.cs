@@ -253,7 +253,7 @@ namespace Proyecto1.Forms
                 }
 
                 ticket.GarantiaDias = garantia;
-
+                MessageBox.Show(cmbEstado.Text);
                 ticket.Estado =
                     (EstadoTicket)Enum.Parse(
                         typeof(EstadoTicket),

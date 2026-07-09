@@ -444,6 +444,9 @@ namespace Proyecto1.Repositorios
                                     t.Prioridad,
                                     t.FechaIngreso,
                                     t.IdEstado,
+t.CostoEstimado,
+t.CostoFinal,
+
 
                                     p.IdProblema,
                                     p.Nombre AS NombreProblema,
@@ -517,7 +520,14 @@ namespace Proyecto1.Repositorios
                     ticket.Prioridad = reader["Prioridad"].ToString();
                     ticket.FechaIngreso = Convert.ToDateTime(reader["FechaIngreso"]);
                     ticket.Estado = ObtenerEstado(Convert.ToInt32(reader["IdEstado"]));
+                    ticket.CostoEstimado =
+    Convert.ToDecimal(reader["CostoEstimado"]);
 
+                    if (reader["CostoFinal"] != DBNull.Value)
+                    {
+                        ticket.CostoFinal =
+                            Convert.ToDecimal(reader["CostoFinal"]);
+                    }
                     lista.Add(ticket);
                 }
 
